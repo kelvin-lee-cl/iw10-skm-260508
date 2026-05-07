@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style_home.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+
+    <title>IW01 BOKSS</title>
+    <style>
+        .modern-title {
+            font-size: 2rem;
+            letter-spacing: -1px;
+            font-weight: 250;
+            border-left: 5px solid #FF5E62;
+            padding-left: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* Custom navbar styling */
+        .navbar {
+            background-color: #FFFFFF !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 80px;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #333333;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: #D87D3A;
+        }
+
+
+
+        .text-rotator {
+            position: relative;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .text-item {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .text-item.active {
+            opacity: 1;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            position: relative;
+            top: 300px;
+        }
+
+
+
+        .btn {
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        h4.mb-3 {
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 2rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-1px);
+        }
+
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .responsive-text {
+                font-size: 14px;
+                /* Adjust for small screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 16px;
+            }
+
+            .headline-container img {
+                width: 100%;
+                padding: 10%;
+            }
+        }
+
+        @media (min-width: 577px) and (max-width: 768px) {
+            .responsive-text {
+                font-size: 16px;
+                /* Adjust for medium screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 992px) {
+            .responsive-text {
+                font-size: 18px;
+                /* Adjust for large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 20px;
+            }
+
+        }
+
+        @media (min-width: 993px) and (max-width: 1200px) {
+            .responsive-text {
+                font-size: 20px;
+                /* Adjust for extra large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+        }
+
+        @media (min-width: 1201px) and (max-width: 1400px) {
+            .responsive-text {
+                font-size: 22px;
+                /* Adjust for larger extra large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+        }
+
+        @media (min-width: 1401px) and (max-width: 1600px) {
+            .responsive-text {
+                font-size: 24px;
+                /* Adjust for even larger screens */
+            }
+
+        }
+
+        @media (min-width: 1601px) and (max-width: 18000px) {
+            .responsive-text {
+                font-size: 26px;
+                /* Adjust for very large screens up to 18,000 pixels */
+            }
+        }
+
+        .scrollable-textarea {
+            height: 200px;
+            /* Set a fixed height */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
+        #sectionTitle {
+            transition: opacity 0.3s ease;
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+
+
+        /* ... existing styles ... */
+
+        .section-box {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .section-box:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .section-box img.round {
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-box {
+            background-color: transparent;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .section-box {
+                padding: 1rem;
+            }
+        }
+
+        li.active {
+            font-weight: bold;
+        }
+
+        /* Add hover animation for the buttons */
+        .btn.rounded-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: inherit !important;
+            /* Keep the original text color */
+        }
+
+        /* Ensure WhatsApp button text colors stay fixed */
+        .btn.btn-warning.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-warning.rounded-pill:hover {
+            color: white !important;
+        }
+
+        .btn.btn-info.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-info.rounded-pill:hover {
+            color: white !important;
+        }
+
+        .btn.btn-primary.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-primary.rounded-pill:hover {
+            color: white !important;
+        }
+
+        /* Prompt Card Styles */
+        .card.mb-3 {
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .card.mb-3:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background-color: var(--secondary-color) !important;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1.25rem;
+        }
+
+        .prompt-card .card-header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .action-buttons {
+            opacity: 1;
+        }
+
+        .card-body:hover .action-buttons {
+            opacity: 1;
+        }
+
+        .action-buttons .btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            border: none;
+        }
+
+        .action-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-buttons .btn i {
+            font-size: 0.8rem;
+        }
+
+        .copy-btn {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .copy-btn:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #f8f9fa;
+            color: #0d6efd;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .edit-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #f8f9fa;
+            color: #dc3545;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .delete-btn:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2d3b;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-text {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #445566;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-2 px-sm-3 px-lg-5">
+        <div class="container-fluid site-navbar-inner px-0">
+            <div class="navbar-brand-logos">
+                <a class="navbar-brand flu_logo" href="https://futureleadersunion.netlify.app/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="./images/FLU_logo2.png"
+                        class="navbar-logo-img navbar-logo-img--flu d-inline-block align-top" alt="Future Leaders Union"
+                        width="100" height="40">
+                </a>
+                <a class="navbar-brand school_logo" href="https://www.skhscps.edu.hk/tc/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="data:image/jpeg;base64,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"
+                        class="navbar-logo-img navbar-logo-img--school d-inline-block align-top" alt="SKM">
+                </a>
+            </div>
+
+            <span id="userIdDisplay" class="text-black me-3 d-none"><span data-i18n="nav.user">User</span>: <span
+                    id="userId"></span></span>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mx-2">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item d-none" id="classPptLink">
+                        <a class="nav-link" href="classppt.html" data-i18n="nav.lessons">Lessons</a>
+                    </li>
+                    <li class="nav-item d-none" id="aiArtStudio">
+                        <a class="nav-link" href="../img-gen/img_gen.html" data-i18n="nav.aiArtStudio">AI Art
+                            Studio</a>
+                    </li>
+                    <li class="nav-item d-none" id="teacherArea">
+                        <a class="nav-link" href="teacherdashboard.html" data-i18n="nav.gallery">Gallery</a>
+                    </li>
+                    <button type="button" class="btn btn-outline-secondary btn-sm me-2" id="langBtn"
+                        title="Switch language" aria-label="Switch language">中文</button>
+                    <button onclick="logout()" class="btn btn-secondary" style="display: none;" id="logoutBtn"
+                        data-i18n="nav.logout">Logout</button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="container">
+        <div class="row flex-grow-2 mt-5 pt-4 fade-in">
+            <div class="col-12  col-md-6 col-sm-12 order-md-2">
+                <img class="img-fluid round" src="images/hero_img.png">
+            </div>
+
+            <div class="col-12 col-md-6 order-md-1 d-flex align-items-center">
+                <div>
+                    <p><i data-i18n="hero.date">2026.05.08 // AI 學習 × 創作工作坊 | AI Learning &amp; Creation Workshop</i></p>
+
+                    <h1 class="responsive-title modern-title">
+                        <span data-i18n="hero.titleLine1">🧰 小學 AI 學習工具最新趨勢 | Latest AI tools for primary learning</span><br>
+                        <span data-i18n="hero.titleLine3">🧑‍🎨 動手做 AI 分身：解釋一個數學概念 | Hands-on AI avatar explaining a math concept</span><br>
+                        <span data-i18n="hero.titleLine4">🤖 打造你的 AI 聊天機器人 | Create your own AI chatbot</span>
+                    </h1>
+
+                    <button class="btn btn-danger btn-lg mt-5" data-bs-toggle="modal" data-bs-target="#loginModal"
+                        data-i18n="hero.login">Login</button>
+                    <button onclick="logout()" class="btn btn-secondary btn-lg mt-5 ms-2" style="display: none;"
+                        id="mainPageLogoutBtn" data-i18n="nav.logout">Logout</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+    </div>
+
+
+
+    <script src="https://kit.fontawesome.com/e067495424.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Modal Structure -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel" data-i18n="modal.highlights">工作坊花絮</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center">
+                    <img id="modalImage" class="img-fluid" src="" alt="" style="max-height: 90vh; max-width: 90vw;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        data-i18n="modal.close">關閉</button>
+                    <button type="button" class="btn btn-primary" id="prevBtn" onclick="changeImage(-1)"
+                        data-i18n="modal.prev">上一張</button>
+                    <button type="button" class="btn btn-primary" id="nextBtn" onclick="changeImage(1)"
+                        data-i18n="modal.next">下一張</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel" data-i18n="login.title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3 mx-4">
+                            <label for="passcode" class="mt-4 form-label" data-i18n="login.passkey">Passkey (3
+                                digits)</label>
+                            <input type="text" class="form-control" id="passcode" maxlength="4" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mx-4 mb-4"
+                            data-i18n="login.confirm">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        let currentIndex = 0;
+        const textItems = document.querySelectorAll('.text-item');
+        const buttons = document.querySelectorAll('.button-container .btn');
+
+        function showText(index) {
+            // Remove active class from all items
+            textItems.forEach(item => item.classList.remove('active'));
+            // Add active class to selected item
+            textItems[index].classList.add('active');
+            currentIndex = index;
+        }
+
+        function rotateText() {
+            currentIndex = (currentIndex + 1) % textItems.length;
+            showText(currentIndex);
+        }
+
+        // Start rotation
+        setInterval(rotateText, 5000);
+
+        // Add hover effect to buttons
+        buttons.forEach((button, index) => {
+            button.addEventListener('mouseover', () => {
+                showText(index);
+            });
+        });
+    </script>
+
+
+
+</body>
+
+</html>

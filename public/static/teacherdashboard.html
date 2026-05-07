@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IW01 BOKSS</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Custom navbar styling */
+        .navbar {
+            background-color: #FFFFFF !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 80px;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #333333;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: #D87D3A;
+        }
+
+
+        li.active {
+            font-weight: bold;
+        }
+
+        @media (max-width: 900px) {
+            .section-box {
+                padding: 1rem;
+            }
+        }
+
+        .submission-image-card,
+        .submission-written-card {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .submission-image-card:hover,
+        .submission-written-card:hover {
+            box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.08) !important;
+        }
+
+        .submission-image-card .card-img-wrap {
+            background: linear-gradient(180deg, #f4f6f9 0%, #eef1f5 100%);
+        }
+
+        .written-card-body {
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        #debugPanel pre {
+            max-height: 260px;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        #galleryScroll {
+            max-height: calc(100vh - 260px);
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-2 px-sm-3 px-lg-5">
+        <div class="container-fluid site-navbar-inner px-0">
+            <div class="navbar-brand-logos">
+                <a class="navbar-brand flu_logo" href="https://futureleadersunion.netlify.app/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="./images/FLU_logo2.png"
+                        class="navbar-logo-img navbar-logo-img--flu d-inline-block align-top" alt="Future Leaders Union"
+                        width="100" height="40">
+                </a>
+                <a class="navbar-brand school_logo" href="https://www.skhscps.edu.hk/tc/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="data:image/jpeg;base64,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"
+                        class="navbar-logo-img navbar-logo-img--school d-inline-block align-top" alt="SKM">
+                </a>
+            </div>
+
+            <span id="userIdDisplay" class="text-black me-3">User: <span id="userId"></span></span>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mx-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="classppt.html" data-i18n="nav.lessons">Lessons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../img-gen/img_gen.html" data-i18n="nav.aiArtStudio">AI Art Studio</a>
+                    </li>
+                    <li class="nav-item active" id="teacherArea">
+                        <a class="nav-link" href="teacherdashboard.html" data-i18n="nav.gallery">Gallery</a>
+                    </li>
+                    <button type="button" class="btn btn-outline-secondary btn-sm me-2" id="langBtn"
+                        title="Switch language" aria-label="Switch language">中文</button>
+                    <button onclick="logout()" class="btn btn-secondary" id="logoutBtn"
+                        data-i18n="nav.logout">Logout</button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 90px;">
+        <div class="row mb-3">
+            <div class="col-12">
+                <h1 class="h4 mb-0" data-i18n="gallery.aiStudioTitle">AI Art Studio — Student gallery</h1>
+            </div>
+        </div>
+        <!-- Add this modal HTML -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModalLabel" data-i18n="gallery.imagePreview">Image Preview</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body position-relative">
+                        <button class="btn btn-dark position-absolute top-50 start-0 translate-middle-y"
+                            onclick="navigateImage(-1)" style="z-index: 1000;">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <img id="modalImage" src="" class="img-fluid" alt="Full size image">
+                        <button class="btn btn-dark position-absolute top-50 end-0 translate-middle-y"
+                            onclick="navigateImage(1)" style="z-index: 1000;">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Image Modal -->
+        <div class="modal fade" id="editImageModal" tabindex="-1" aria-labelledby="editImageModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editImageModalLabel" data-i18n="gallery.editImage">Edit Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="image-container" style="text-align: center; margin-bottom: 20px;">
+                                    <img id="editImage" src="" class="img-fluid" alt="Image to edit"
+                                        style="max-height: 400px;">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 data-i18n="gallery.rotationControls">Rotation Controls</h6>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" onclick="rotateImage(90)">
+                                        <i class="fas fa-redo"></i> <span data-i18n="gallery.rotateRight">Rotate Right
+                                            (90°)</span>
+                                    </button>
+                                    <button class="btn btn-primary" onclick="rotateImage(180)">
+                                        <i class="fas fa-sync"></i> <span data-i18n="gallery.rotate180">Rotate
+                                            180°</span>
+                                    </button>
+                                    <button class="btn btn-primary" onclick="rotateImage(270)">
+                                        <i class="fas fa-undo"></i> <span data-i18n="gallery.rotateLeft">Rotate Left
+                                            (270°)</span>
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="resetRotation()">
+                                        <i class="fas fa-home"></i> <span data-i18n="gallery.resetRotation">Reset
+                                            Rotation</span>
+                                    </button>
+                                </div>
+                                <hr>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-success" onclick="saveImageChanges()">
+                                        <i class="fas fa-save"></i> <span data-i18n="gallery.saveChanges">Save
+                                            Changes</span>
+                                    </button>
+                                    <button class="btn btn-danger" onclick="deleteCurrentImage()">
+                                        <i class="fas fa-trash"></i> <span data-i18n="gallery.deleteImage">Delete
+                                            Image</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <!-- Filter Controls -->
+            <div class="col-md-4">
+                <label for="userFilter" class="form-label" data-i18n="gallery.filterByUser">Filter by User ID:</label>
+                <select class="form-select" id="userFilter">
+                    <option value="" data-i18n="gallery.allUsers">All Users</option>
+                    <!-- User IDs will be populated dynamically -->
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="activityFilter" class="form-label" data-i18n="gallery.activity">Activity:</label>
+                <select class="form-select" id="activityFilter">
+                    <option value="" data-i18n="gallery.allActivities">All Activities</option>
+                    <option value="heygen_avatar" data-i18n="gallery.activityHeygenAvatarFilter">AI avatar & tutor
+                        (HeyGen / Perplexity)</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="sortOrder" class="form-label" data-i18n="gallery.sortBy">Sort by:</label>
+                <select class="form-select" id="sortOrder">
+                    <option value="newest" data-i18n="gallery.newestFirst">Newest First</option>
+                    <option value="oldest" data-i18n="gallery.oldestFirst">Oldest First</option>
+                    <option value="votes" data-i18n="gallery.mostVotes">Most Votes</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label" data-i18n="gallery.voteStatus">Vote Status:</label>
+                <div class="alert alert-info mb-0" id="voteStatus">
+                    <span data-i18n="gallery.votesRemaining">Votes remaining:</span> <span id="votesRemaining">3</span>
+                </div>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <div class="btn-group w-100">
+                    <button class="btn btn-primary" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="btn btn-info" id="testConnectionBtn">
+                        <i class="fas fa-plug"></i>
+                    </button>
+                    <button class="btn btn-warning" onclick="resetVotes()" title="Reset all votes">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="statusMessage" class="alert alert-danger d-none mb-3" role="alert"></div>
+        <div class="d-flex justify-content-end mb-2">
+            <button class="btn btn-sm btn-outline-dark d-none" id="toggleDebugBtn" type="button">
+                Toggle Debug
+            </button>
+        </div>
+        <div id="debugPanel" class="alert alert-secondary d-none mb-3" role="status">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <strong>Gallery Debug</strong>
+                <span class="small text-muted" id="debugTimestamp"></span>
+            </div>
+            <div class="small mb-2" id="debugSummary">No debug data yet.</div>
+            <pre class="small mb-0" id="debugDetails">[]</pre>
+        </div>
+
+        <h2 class="h6 text-uppercase text-muted small fw-semibold mb-3" data-i18n="gallery.sectionImages">Gallery &
+            submissions</h2>
+        <div id="galleryScroll" class="mb-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="galleryContainer"></div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-5 d-none" id="writtenSubmissionsGrid"></div>
+    </div>
+
+    <script type="module">
+        /** Images: `/api/gallery`. Avatar workshop: Firebase `avatar_workshop_progress` (+ legacy `avatar_workshop_submissions`). */
+
+        import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            query,
+            orderBy,
+            getDocs,
+            limit,
+            deleteDoc,
+            doc
+        } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDA-xRi4wnkZ-30fnSfZ7ufaIFyTutAbbA",
+            authDomain: "iw10-skm.firebaseapp.com",
+            projectId: "iw10-skm",
+            storageBucket: "iw10-skm.firebasestorage.app",
+            messagingSenderId: "158280477806",
+            appId: "1:158280477806:web:aef32aed0ef203d9b28a7f",
+            measurementId: "G-DNX5CC83Z4"
+        };
+
+        function getTeacherFirestore() {
+            if (window.__teacherFirestoreDb) return window.__teacherFirestoreDb;
+            try {
+                const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+                const db = getFirestore(app);
+                window.__teacherFirestoreDb = db;
+                return db;
+            } catch (e) {
+                console.error('Teacher dashboard Firestore init failed:', e);
+                return null;
+            }
+        }
+
+        function safeHttpHref(url) {
+            try {
+                const u = new URL(String(url || '').trim());
+                if (u.protocol !== 'http:' && u.protocol !== 'https:') return '#';
+                return u.href;
+            } catch {
+                return '#';
+            }
+        }
+
+        function escapeHtml(s) {
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function hideDashboardStatus() {
+            const el = document.getElementById('statusMessage');
+            if (!el) return;
+            el.classList.add('d-none');
+            el.textContent = '';
+        }
+
+        function showDashboardStatus(message, variant) {
+            const el = document.getElementById('statusMessage');
+            if (!el || !message) return;
+            el.classList.remove('d-none');
+            const cls = variant === 'warn' ? 'alert-warning' : 'alert-danger';
+            el.className = `alert mb-3 ${cls}`;
+            el.textContent = message;
+        }
+
+        hideDashboardStatus();
+
+        const TXT_ACTIVITY_IDS = ['1', '2.1', '2.2', '2.3', '4.1', '4.2'];
+
+        function parseTxtSubmissionFilename(name) {
+            if (!name || !name.endsWith('.txt')) return null;
+            const base = name.slice(0, -4);
+            const parts = base.split('_');
+            if (parts.length < 4) return null;
+            const slug = parts[parts.length - 1];
+            const activityId = parts[parts.length - 2];
+            const ts = parseInt(parts[parts.length - 3], 10);
+            if (!TXT_ACTIVITY_IDS.includes(activityId) || !Number.isFinite(ts)) return null;
+            const userId = parts.slice(0, parts.length - 3).join('_');
+            return { userId, ts, activityId, slug, filename: name };
+        }
+
+        function parseTxtSubmissionFilenameLoose(name) {
+            if (!name || !name.endsWith('.txt')) return null;
+            const strict = parseTxtSubmissionFilename(name);
+            if (strict) return strict;
+
+            const base = name.slice(0, -4);
+            const parts = base.split('_').filter(Boolean);
+            if (parts.length === 0) return null;
+
+            const tsPart = parts.find((p) => /^\d{10,13}$/.test(p));
+            const ts = tsPart ? parseInt(tsPart, 10) : Date.now();
+            const activityPart = parts.find((p) => /^[0-9]+(?:\.[0-9]+)?$/.test(p));
+            const activityId = activityPart || '';
+            const slug = parts[parts.length - 1] || '';
+            const userId = parts[0] || 'unknown';
+            return { userId, ts, activityId, slug, filename: name };
+        }
+
+        function extractTextFromSubmissionRow(row) {
+            if (!row || typeof row !== 'object') return '';
+            const keys = [
+                'text', 'content', 'submissionText', 'selfIntroduction', 'selfIntro',
+                'intro', 'introduction', 'answer', 'response', 'message', 'body'
+            ];
+            for (const key of keys) {
+                const value = row[key];
+                if (typeof value === 'string' && value.trim()) return value.trim();
+                if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+                if (Array.isArray(value)) {
+                    const flat = value.map((v) => (v == null ? '' : String(v))).join('\n').trim();
+                    if (flat) return flat;
+                }
+                if (value && typeof value === 'object') {
+                    const nestedKeys = ['text', 'value', 'content', 'answer', 'response', 'intro'];
+                    for (const nk of nestedKeys) {
+                        const nv = value[nk];
+                        if (typeof nv === 'string' && nv.trim()) return nv.trim();
+                    }
+                    const jsonText = JSON.stringify(value).trim();
+                    if (jsonText && jsonText !== '{}') return jsonText;
+                }
+            }
+            return '';
+        }
+
+        function writtenCardKind(activityId, slug) {
+            const aid = String(activityId || '').toLowerCase();
+            if (aid === 'heygen_avatar') return 'avatarWorkshop';
+            const sid = String(slug || '').toLowerCase();
+            if (aid === '2.2' || sid === 'gmail') return 'gmail';
+            if (aid === '2.1' || sid === 'selfintro') return 'selfintro';
+            return 'other';
+        }
+
+        function writtenCardTitle(kind) {
+            if (typeof window.getTranslation === 'function') {
+                if (kind === 'avatarWorkshop') return window.getTranslation('gallery.cardAvatarWorkshop');
+                if (kind === 'gmail') return window.getTranslation('gallery.cardGmail');
+                if (kind === 'selfintro') return window.getTranslation('gallery.cardSelfIntro');
+                return 'Written submission';
+            }
+            if (kind === 'avatarWorkshop') return 'AI avatar & tutor';
+            if (kind === 'gmail') return 'Gmail';
+            if (kind === 'selfintro') return 'Self-introduction';
+            return 'Written submission';
+        }
+
+        function textCardKey(item) {
+            const raw =
+                item && item.source === 'firestore' && item.id
+                    ? `fs_${item.fbCollection === 'avatar_workshop_progress' ? 'prog' : 'sub'}_${item.id}`
+                    : `txt_${String(item.userId || 'u')}_${String(item.activityId || 'a')}_${String(item.sortKey || 0)}_${String(item.text || '').slice(0, 24)}`;
+            return raw.replace(/[^a-zA-Z0-9_-]/g, '_');
+        }
+
+        let writtenSubmissionCards = [];
+        let writtenLoadRequestId = 0;
+        const debugState = {
+            firestoreRows: 0,
+            storageTxtRows: 0,
+            mergedRows: 0,
+            addedFromFirestore: 0,
+            addedFromStorage: 0,
+            skippedEmptyText: 0,
+            writtenRowsInGallery: 0,
+            imagesInGallery: 0,
+            errors: [],
+            sampleWritten: [],
+            sampleRawRows: []
+        };
+
+        function updateDebugPanel() {
+            const summaryEl = document.getElementById('debugSummary');
+            const detailsEl = document.getElementById('debugDetails');
+            const tsEl = document.getElementById('debugTimestamp');
+            if (!summaryEl || !detailsEl || !tsEl) return;
+
+            summaryEl.textContent =
+                `Firestore text rows: ${debugState.firestoreRows} | ` +
+                `Storage .txt rows: ${debugState.storageTxtRows} | ` +
+                `Merged text rows: ${debugState.mergedRows} | ` +
+                `+FS: ${debugState.addedFromFirestore} | +TXT: ${debugState.addedFromStorage} | Empty: ${debugState.skippedEmptyText} | ` +
+                `Text cards shown: ${debugState.writtenRowsInGallery} | ` +
+                `Image cards shown: ${debugState.imagesInGallery}`;
+            detailsEl.textContent = JSON.stringify(
+                {
+                    sampleRawRows: debugState.sampleRawRows,
+                    sampleWritten: debugState.sampleWritten,
+                    errors: debugState.errors
+                },
+                null,
+                2
+            );
+            tsEl.textContent = new Date().toLocaleTimeString();
+        }
+
+        function pushDebugError(source, error) {
+            debugState.errors.push({
+                source,
+                message: error && error.message ? error.message : String(error || 'Unknown error')
+            });
+            debugState.errors = debugState.errors.slice(-10);
+            updateDebugPanel();
+        }
+
+        function avatarWorkshopTsMillis(d) {
+            const keys = [
+                'updatedAt',
+                'audioSubmittedAt',
+                'perplexityLinkSubmittedAt',
+                'heygenLinkSubmittedAt',
+                'scriptSubmittedAt',
+                'createdAt'
+            ];
+            for (const k of keys) {
+                const v = d[k];
+                if (v && typeof v.toMillis === 'function') return v.toMillis();
+            }
+            return Date.now();
+        }
+
+        /** Load HeyGen / Perplexity workshop rows from Firestore (progress + legacy submissions). */
+        async function loadWrittenSubmissionCards() {
+            const requestId = ++writtenLoadRequestId;
+            writtenSubmissionCards = [];
+            debugState.firestoreRows = 0;
+            debugState.storageTxtRows = 0;
+            debugState.mergedRows = 0;
+            debugState.addedFromFirestore = 0;
+            debugState.addedFromStorage = 0;
+            debugState.skippedEmptyText = 0;
+            debugState.sampleWritten = [];
+            debugState.sampleRawRows = [];
+            updateDebugPanel();
+
+            const db = getTeacherFirestore();
+            if (!db) {
+                pushDebugError('firestore', new Error('Firestore not initialized'));
+                populateUserFilter();
+                filterAndDisplayImages();
+                return;
+            }
+
+            try {
+                const progSnap = await getDocs(collection(db, 'avatar_workshop_progress'));
+                if (requestId !== writtenLoadRequestId) return;
+
+                progSnap.forEach((docSnap) => {
+                    const d = docSnap.data();
+                    const ts = avatarWorkshopTsMillis(d);
+                    const scriptText = String(d.scriptText || '').trim();
+                    const audioUrl = String(d.heygenTrainingAudioUrl || '').trim();
+                    const heygenLink = String(d.heygenAvatarLink || '').trim();
+                    const perplexityLink = String(d.perplexityTutorLink || '').trim();
+                    const uid = String(d.userId || '');
+                    writtenSubmissionCards.push({
+                        source: 'firestore',
+                        id: docSnap.id,
+                        fbCollection: 'avatar_workshop_progress',
+                        userId: uid,
+                        activityId: String(d.activityId || 'heygen_avatar'),
+                        kind: 'avatarWorkshop',
+                        scriptText,
+                        audioUrl,
+                        heygenLink,
+                        perplexityLink,
+                        sortKey: ts,
+                        dateLabel: new Date(ts).toLocaleString(),
+                        text: [scriptText, heygenLink, perplexityLink].filter(Boolean).join('\n')
+                    });
+                    debugState.addedFromFirestore++;
+                    if (debugState.sampleWritten.length < 6) {
+                        debugState.sampleWritten.push({ id: docSnap.id, userId: uid, src: 'progress' });
+                    }
+                });
+
+                try {
+                    const legQ = query(
+                        collection(db, 'avatar_workshop_submissions'),
+                        orderBy('createdAt', 'desc'),
+                        limit(400)
+                    );
+                    const legSnap = await getDocs(legQ);
+                    legSnap.forEach((docSnap) => {
+                        const d = docSnap.data();
+                        let ts = Date.now();
+                        if (d.createdAt && typeof d.createdAt.toMillis === 'function') {
+                            ts = d.createdAt.toMillis();
+                        }
+                        const scriptText = String(d.scriptText || '').trim();
+                        const audioUrl = String(d.heygenTrainingAudioUrl || '').trim();
+                        const heygenLink = String(d.heygenAvatarLink || '').trim();
+                        const perplexityLink = String(d.perplexityTutorLink || '').trim();
+                        const uid = String(d.userId || '');
+                        writtenSubmissionCards.push({
+                            source: 'firestore',
+                            id: docSnap.id,
+                            fbCollection: 'avatar_workshop_submissions',
+                            userId: uid,
+                            activityId: String(d.activityId || 'heygen_avatar'),
+                            kind: 'avatarWorkshop',
+                            scriptText,
+                            audioUrl,
+                            heygenLink,
+                            perplexityLink,
+                            sortKey: ts,
+                            dateLabel: new Date(ts).toLocaleString(),
+                            text: [scriptText, heygenLink, perplexityLink].filter(Boolean).join('\n')
+                        });
+                        debugState.addedFromFirestore++;
+                        if (debugState.sampleWritten.length < 12) {
+                            debugState.sampleWritten.push({ id: docSnap.id, userId: uid, src: 'legacy' });
+                        }
+                    });
+                } catch (legErr) {
+                    pushDebugError('avatar_workshop_submissions', legErr);
+                    console.warn('Legacy submissions query skipped or failed:', legErr);
+                }
+
+                debugState.firestoreRows = writtenSubmissionCards.length;
+                debugState.mergedRows = writtenSubmissionCards.length;
+            } catch (err) {
+                pushDebugError('avatar_workshop_progress', err);
+                console.error('Could not load avatar workshop Firestore data:', err);
+            }
+
+            if (requestId !== writtenLoadRequestId) return;
+            populateUserFilter();
+            filterAndDisplayImages();
+        }
+
+        function workshopActivityLabel(storageActivity) {
+            if (storageActivity == null || storageActivity === '') return '';
+            return String(storageActivity);
+        }
+
+        function activityLabelById(activityId) {
+            const aid = String(activityId || '');
+            if (typeof window.getTranslation === 'function') {
+                if (aid === 'heygen_avatar') return window.getTranslation('gallery.activityHeygenAvatar');
+                if (aid === '2.1') return window.getTranslation('gallery.activity1');
+                if (aid === '1') return window.getTranslation('gallery.activity2');
+                if (aid === '2.2') return window.getTranslation('gallery.activity3');
+            }
+            if (aid === 'heygen_avatar') return 'AI avatar & tutor — HeyGen / Perplexity';
+            if (aid === '2.1') return '2.1 — Self-introduction (English)';
+            if (aid === '1') return '1 — Profile picture';
+            if (aid === '2.2') return '2.2 — Self-introduction (Chinese)';
+            return aid;
+        }
+
+        function getFilteredAndSortedWrittenCards(userFilter, activityFilter, sortOrder) {
+            const cards = writtenSubmissionCards.filter((item) => {
+                const matchesUser = !userFilter || String(item.userId) === userFilter;
+                const matchesActivity = !activityFilter || String(item.activityId) === activityFilter;
+                return matchesUser && matchesActivity;
+            });
+
+            if (sortOrder === 'oldest') {
+                cards.sort((a, b) => (a.sortKey || 0) - (b.sortKey || 0));
+            } else if (sortOrder === 'votes') {
+                cards.sort((a, b) => {
+                    const av = getTextSubmissionVotes(textCardKey(a));
+                    const bv = getTextSubmissionVotes(textCardKey(b));
+                    if (bv !== av) return bv - av;
+                    return (b.sortKey || 0) - (a.sortKey || 0);
+                });
+            } else {
+                cards.sort((a, b) => (b.sortKey || 0) - (a.sortKey || 0));
+            }
+
+            return cards;
+        }
+
+        let allImages = []; // Store all images data
+
+        function mapGalleryApiImage(img) {
+            const name = String(img.id || '');
+            const prompt = String(img.prompt || '');
+            const url = String(img.url || '');
+            const tsIso = img.timestamp;
+            let timestamp = tsIso ? new Date(tsIso).getTime() : Date.now();
+            if (!Number.isFinite(timestamp)) timestamp = Date.now();
+
+            let userId = String(img.userId ?? 'unknown');
+            let activity = img.activity != null && img.activity !== '' ? String(img.activity) : null;
+            let type = img.aiType != null && img.aiType !== '' ? String(img.aiType) : 'gallery';
+
+            const filenameParts = name.split('_');
+            if (!activity && filenameParts.length >= 3) {
+                const validActivities = ['1', '2.1', '2.2', '2.3', '4.1', '4.2'];
+                const maybeTs = parseInt(filenameParts[1], 10);
+                if (!Number.isNaN(maybeTs)) {
+                    timestamp = maybeTs;
+                    userId = filenameParts[0];
+                    let promptPartsStart;
+                    if (filenameParts.length >= 5 && validActivities.includes(filenameParts[2])) {
+                        activity = filenameParts[2];
+                        type = filenameParts[3];
+                        promptPartsStart = 4;
+                    } else {
+                        type = filenameParts[2] || type;
+                        promptPartsStart = 3;
+                    }
+                    const encodedPrompt = filenameParts.slice(promptPartsStart).join('_').replace(/\.png$/i, '');
+                    const derived = decodeURIComponent(encodedPrompt).replace(/_/g, ' ');
+                    return {
+                        url,
+                        name,
+                        userId,
+                        timestamp,
+                        type,
+                        activity,
+                        prompt: prompt || derived,
+                        date: new Date(timestamp),
+                        votes: getImageVotes(name)
+                    };
+                }
+            }
+
+            return {
+                url,
+                name,
+                userId,
+                timestamp,
+                type,
+                activity,
+                prompt,
+                date: new Date(timestamp),
+                votes: getImageVotes(name)
+            };
+        }
+
+        // Function to load all images from this server's gallery API (memory-backed in server.js)
+        async function loadImages() {
+            hideDashboardStatus();
+
+            try {
+                const res = await fetch('/api/gallery');
+                if (!res.ok) throw new Error(`Gallery HTTP ${res.status}`);
+                const data = await res.json().catch(() => ({}));
+                const images = Array.isArray(data.images) ? data.images : [];
+
+                allImages = images.map((img) => mapGalleryApiImage(img));
+
+                if (allImages.length === 0) {
+                    const gallery = document.getElementById('galleryContainer');
+                    if (gallery) gallery.innerHTML = '';
+                    populateUserFilter();
+                    filterAndDisplayImages();
+                    return;
+                }
+
+                populateUserFilter();
+                filterAndDisplayImages();
+            } catch (error) {
+                console.error('Error loading images:', error);
+                showDashboardStatus(error.message || 'Error loading images.', 'error');
+            }
+        }
+
+        let currentImageIndex = 0;
+        let filteredImages = [];
+
+        // Make navigateImage function available globally
+        window.navigateImage = function (direction) {
+            currentImageIndex = (currentImageIndex + direction + filteredImages.length) % filteredImages.length;
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = filteredImages[currentImageIndex].url;
+        }
+
+        window.openImageModal = function (imageUrl) {
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = imageUrl;
+            // Find the index of the clicked image
+            currentImageIndex = filteredImages.findIndex(img => img.url === imageUrl);
+            const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+            modal.show();
+        }
+
+        // Function to filter and display images
+        function filterAndDisplayImages() {
+            hideDashboardStatus();
+            const gallery = document.getElementById('galleryContainer');
+            gallery.innerHTML = '';
+
+            const userFilter = document.getElementById('userFilter').value;
+            const activityFilter = document.getElementById('activityFilter').value;
+            const sortOrder = document.getElementById('sortOrder').value;
+
+            const filteredWrittenCards = getFilteredAndSortedWrittenCards(userFilter, activityFilter, sortOrder);
+
+            filteredImages = allImages.filter((img) => {
+                const matchesUser = !userFilter || img.userId === userFilter;
+                const matchesActivity = !activityFilter || String(img.activity) === activityFilter;
+                return matchesUser && matchesActivity;
+            });
+
+            if (filteredImages.length > 0) {
+                // Sort images based on the selected sort order
+                if (sortOrder === "newest") {
+                    filteredImages.sort((a, b) => b.timestamp - a.timestamp);
+                } else if (sortOrder === "oldest") {
+                    filteredImages.sort((a, b) => a.timestamp - b.timestamp);
+                } else if (sortOrder === "votes") {
+                    filteredImages.sort((a, b) => b.votes - a.votes);
+                }
+            }
+            debugState.imagesInGallery = filteredImages.length;
+
+            filteredImages.forEach(img => {
+                const col = document.createElement('div');
+                col.className = 'col';
+
+                // Check if current user can vote on this image
+                const currentUserId = localStorage.getItem('currentUserId');
+                const canVote = currentUserId && currentUserId !== img.userId && !hasVotedOnImage(img.name);
+                const voteButtonClass = canVote ? 'btn-success' : 'btn-secondary';
+                const voteButtonDisabled = !canVote ? 'disabled' : '';
+                const voteButtonText = hasVotedOnImage(img.name) ? '<i class="fas fa-check"></i> Voted' : '<i class="fas fa-thumbs-up"></i> Vote';
+
+                // Check if this is the user's own image (admin userId 55 can edit/delete any image)
+                const ADMIN_USER_ID = '55';
+                const isOwnImage = currentUserId === img.userId;
+                const isAdmin = currentUserId === ADMIN_USER_ID;
+                const canEditDelete = isOwnImage || isAdmin;
+
+                // Check if there's a stored rotation for this image
+                const imageRotations = JSON.parse(localStorage.getItem('imageRotations') || '{}');
+                const storedRotation = imageRotations[img.name] || 0;
+                const rotationStyle = storedRotation !== 0 ? `transform: rotate(${storedRotation}deg);` : '';
+
+                const actLabel =
+                    img.activity != null
+                        ? escapeHtml(activityLabelById(img.activity))
+                        : escapeHtml(String(img.type || ''));
+                const qUrl = String(img.url).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                const qName = String(img.name).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                const qUser = String(img.userId).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                col.innerHTML = `
+                    <div class="card h-100 shadow-sm border-0 submission-image-card">
+                        <div class="card-img-wrap rounded-top d-flex align-items-center justify-content-center p-3" style="min-height:220px;">
+                            <img src="${img.url}" class="img-fluid rounded" alt="" style="cursor:pointer;max-height:280px;object-fit:contain;${rotationStyle}" onclick="openImageModal('${qUrl}')">
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <span class="badge bg-secondary">${actLabel}</span>
+                                <span class="small text-muted text-nowrap">${escapeHtml(String(img.userId))}</span>
+                            </div>
+                            <p class="small text-muted mb-2">${escapeHtml(img.date.toLocaleString())}</p>
+                            <p class="card-text small flex-grow-1 mb-3" style="white-space:pre-wrap;word-break:break-word;">${escapeHtml(img.prompt)}</p>
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-auto">
+                                <div class="vote-section d-flex flex-wrap align-items-center gap-2">
+                                    <span class="badge bg-primary">Votes: <span id="votes-${img.name}">${img.votes || 0}</span></span>
+                                    <button type="button" class="btn btn-sm ${voteButtonClass}" ${voteButtonDisabled}
+                                            onclick="voteForImage('${qName}', '${qUser}')"
+                                            data-filename="${img.name}">
+                                        ${voteButtonText}
+                                    </button>
+                                </div>
+                                ${canEditDelete ? `
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="editImage('${qUrl}', '${qName}', '${qUser}')" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm delete-btn" data-filename="${img.name}" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                gallery.appendChild(col);
+            });
+
+            filteredWrittenCards.forEach((item) => {
+                const currentUserId = localStorage.getItem('currentUserId');
+                const ADMIN_USER_ID = '55';
+                const isOwnText = currentUserId === String(item.userId);
+                const isAdmin = currentUserId === ADMIN_USER_ID;
+                const key = textCardKey(item);
+                const canVote = currentUserId && currentUserId !== String(item.userId) && !hasVotedOnTextSubmission(key);
+                const voteButtonClass = canVote ? 'btn-success' : 'btn-secondary';
+                const voteButtonDisabled = canVote ? '' : 'disabled';
+                const voteButtonText = hasVotedOnTextSubmission(key)
+                    ? '<i class="fas fa-check"></i> Voted'
+                    : '<i class="fas fa-thumbs-up"></i> Vote';
+                const qKey = String(key).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                const qOwner = String(item.userId).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                const col = document.createElement('div');
+                col.className = 'col';
+
+                if (item.kind === 'avatarWorkshop') {
+                    const L = (k, fb) =>
+                        escapeHtml(typeof window.getTranslation === 'function' ? window.getTranslation(k) : fb);
+                    const title = escapeHtml(writtenCardTitle('avatarWorkshop'));
+                    const scriptLbl = L('gallery.avatarScriptLabel', 'Script');
+                    const audioLbl = L('gallery.avatarTrainingAudio', 'Training audio');
+                    const hgLbl = L('gallery.avatarHeygenLink', 'HeyGen link');
+                    const ppLbl = L('gallery.avatarPerplexityLink', 'Perplexity tutor link');
+                    const openLbl = L('gallery.openLink', 'Open');
+                    const scriptBody = escapeHtml(String(item.scriptText || ''));
+                    const hg = safeHttpHref(item.heygenLink);
+                    const pp = safeHttpHref(item.perplexityLink);
+                    const au = safeHttpHref(item.audioUrl);
+                    const actBadge = escapeHtml(activityLabelById(item.activityId));
+                    const canDelete =
+                        (isOwnText || isAdmin) && item.source === 'firestore' && !!item.id;
+                    const audioBlock =
+                        au !== '#'
+                            ? `<div class="mt-2"><span class="small fw-semibold">${audioLbl}</span><audio controls preload="metadata" src="${escapeHtml(au)}" class="w-100 mt-1"></audio></div>`
+                            : `<div class="small text-muted mt-2">${audioLbl}: —</div>`;
+                    col.innerHTML = `
+                    <div class="card h-100 shadow-sm border-0 submission-image-card">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <span class="badge bg-dark bg-opacity-85 d-inline-flex align-items-center gap-1">
+                                    <i class="fas fa-robot"></i> ${title}
+                                </span>
+                                <span class="small text-muted text-nowrap">${escapeHtml(String(item.userId))}</span>
+                            </div>
+                            <span class="badge bg-secondary align-self-start mb-2">${actBadge}</span>
+                            <div class="written-card-body small flex-grow-1 text-body">
+                                <div class="fw-semibold mb-1">${scriptLbl}</div>
+                                <div style="white-space:pre-wrap;word-break:break-word;">${scriptBody}</div>
+                                ${audioBlock}
+                                <div class="mt-3 d-flex flex-column gap-2">
+                                    <div><span class="fw-semibold">${hgLbl}</span><br>
+                                        <a href="${escapeHtml(hg)}" target="_blank" rel="noopener noreferrer" class="small">${openLbl}</a>
+                                        <span class="small text-muted text-break d-block mt-1">${escapeHtml(String(item.heygenLink || ''))}</span>
+                                    </div>
+                                    <div><span class="fw-semibold">${ppLbl}</span><br>
+                                        <a href="${escapeHtml(pp)}" target="_blank" rel="noopener noreferrer" class="small">${openLbl}</a>
+                                        <span class="small text-muted text-break d-block mt-1">${escapeHtml(String(item.perplexityLink || ''))}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            ${item.dateLabel ? `<div class="small text-muted mt-2 pt-2 border-top">${escapeHtml(item.dateLabel)}</div>` : ''}
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+                                <div class="vote-section d-flex flex-wrap align-items-center gap-2">
+                                    <span class="badge bg-primary">Votes: <span id="text-votes-${qKey}">${getTextSubmissionVotes(key)}</span></span>
+                                    <button type="button" class="btn btn-sm ${voteButtonClass}" ${voteButtonDisabled}
+                                            onclick="voteForTextSubmission('${qKey}', '${qOwner}')"
+                                            data-text-key="${qKey}">
+                                        ${voteButtonText}
+                                    </button>
+                                </div>
+                                ${canDelete ? `
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteTextSubmission('${qKey}')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+                    gallery.appendChild(col);
+                    return;
+                }
+
+                const isGmail = item.kind === 'gmail';
+                const isSelfIntro = item.kind === 'selfintro';
+                const badgeClass = isGmail
+                    ? 'bg-danger bg-opacity-90'
+                    : isSelfIntro
+                      ? 'bg-primary bg-opacity-90'
+                      : 'bg-secondary';
+                const titlePlain = writtenCardTitle(item.kind);
+                const icon = isGmail ? 'fa-envelope' : isSelfIntro ? 'fa-user' : 'fa-file-alt';
+                const fullText = String(item.text || '').trim();
+                const canEditDelete =
+                    (isOwnText || isAdmin) && item.source === 'firestore' && !!item.id;
+                col.innerHTML = `
+                    <div class="card h-100 shadow-sm border-0 submission-image-card">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <span class="badge ${badgeClass} d-inline-flex align-items-center gap-1">
+                                    <i class="fas ${icon}"></i> ${escapeHtml(titlePlain)}
+                                </span>
+                                <span class="small text-muted text-nowrap">${escapeHtml(String(item.userId))}</span>
+                            </div>
+                            <div class="written-card-body small flex-grow-1 text-body" style="white-space:pre-wrap;word-break:break-word;">${escapeHtml(fullText)}</div>
+                            ${item.dateLabel ? `<div class="small text-muted mt-2 pt-2 border-top">${escapeHtml(item.dateLabel)}</div>` : ''}
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+                                <div class="vote-section d-flex flex-wrap align-items-center gap-2">
+                                    <span class="badge bg-primary">Votes: <span id="text-votes-${qKey}">${getTextSubmissionVotes(key)}</span></span>
+                                    <button type="button" class="btn btn-sm ${voteButtonClass}" ${voteButtonDisabled}
+                                            onclick="voteForTextSubmission('${qKey}', '${qOwner}')"
+                                            data-text-key="${qKey}">
+                                        ${voteButtonText}
+                                    </button>
+                                </div>
+                                ${canEditDelete ? `
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-warning btn-sm" onclick="editTextSubmission('${qKey}')" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteTextSubmission('${qKey}')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+                gallery.appendChild(col);
+            });
+            debugState.writtenRowsInGallery = filteredWrittenCards.length;
+            updateDebugPanel();
+
+            // Add event listeners to delete buttons
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    const button = e.target.closest('.delete-btn');
+                    if (!button) return;
+
+                    const filename = button.dataset.filename;
+                    if (!filename) {
+                        console.error('No filename found in data attribute');
+                        return;
+                    }
+
+                    if (confirm('Are you sure you want to delete this AI-generated image?')) {
+                        deleteImage(filename);
+                    }
+                });
+            });
+        }
+
+        // Function to populate user ID dropdown
+        function populateUserFilter() {
+            const userFilter = document.getElementById('userFilter');
+            const existingOptions = userFilter.querySelectorAll('option');
+
+            // Keep the "All Users" option
+            userFilter.innerHTML = '<option value="">All Users</option>';
+
+            // Get unique user IDs from both image and text submissions
+            const usersFromImages = allImages.map((img) => String(img.userId || ''));
+            const usersFromText = writtenSubmissionCards.map((item) => String(item.userId || ''));
+            const uniqueUserIds = [...new Set([...usersFromImages, ...usersFromText].filter(Boolean))]
+                .sort((a, b) => {
+                    const na = Number(a);
+                    const nb = Number(b);
+                    if (Number.isFinite(na) && Number.isFinite(nb)) return na - nb;
+                    return a.localeCompare(b);
+                });
+
+            // Add user ID options
+            uniqueUserIds.forEach(userId => {
+                const option = document.createElement('option');
+                option.value = userId;
+                option.textContent = `User ${userId}`;
+                userFilter.appendChild(option);
+            });
+        }
+
+        // Function to delete an image
+        async function deleteImage(filename) {
+            const currentUserId = localStorage.getItem('currentUserId');
+
+            // Find the image to check ownership
+            const imageToDelete = allImages.find(img => img.name === filename);
+            if (!imageToDelete) {
+                alert('Image not found!');
+                return;
+            }
+
+            // Allow owner or admin (userId 55) to delete
+            const isAdmin = currentUserId === '55';
+            if (currentUserId !== imageToDelete.userId && !isAdmin) {
+                alert('You can only delete your own images!');
+                return;
+            }
+
+            hideDashboardStatus();
+
+            try {
+                const res = await fetch(`/api/admin/images/${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                const body = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    throw new Error(body.error || `Delete failed (${res.status})`);
+                }
+                hideDashboardStatus();
+                loadImages();
+            } catch (error) {
+                console.error("Error deleting image:", error);
+                showDashboardStatus(error.message || 'Delete failed.', 'error');
+            }
+        }
+
+        // Add event listeners for filters and refresh button
+        document.getElementById('userFilter').addEventListener('input', filterAndDisplayImages);
+        document.getElementById('activityFilter').addEventListener('change', filterAndDisplayImages);
+        document.getElementById('sortOrder').addEventListener('change', filterAndDisplayImages);
+        document.getElementById('toggleDebugBtn').addEventListener('click', () => {
+            const panel = document.getElementById('debugPanel');
+            if (!panel) return;
+            panel.classList.toggle('d-none');
+            updateDebugPanel();
+        });
+        document.getElementById('refreshBtn').addEventListener('click', () => {
+            loadImages();
+            loadWrittenSubmissionCards();
+        });
+
+        // Add event listener for test connection button
+        document.getElementById('testConnectionBtn').addEventListener('click', testGalleryConnection);
+
+        async function testGalleryConnection() {
+            hideDashboardStatus();
+            try {
+                const res = await fetch('/api/gallery');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                hideDashboardStatus();
+                loadImages();
+                loadWrittenSubmissionCards();
+                return true;
+            } catch (error) {
+                showDashboardStatus(error.message || 'Could not reach /api/gallery.', 'warn');
+                console.error('Gallery connection test failed:', error);
+                return false;
+            }
+        }
+
+        window.onLanguageChange = function () {
+            filterAndDisplayImages();
+            loadWrittenSubmissionCards();
+        };
+
+        loadImages();
+        loadWrittenSubmissionCards();
+
+        // Voting system functions
+        let userVotes = JSON.parse(localStorage.getItem('userVotes') || '[]');
+        let totalVotesUsed = userVotes.length;
+
+        function getTextSubmissionByKey(key) {
+            return writtenSubmissionCards.find((item) => textCardKey(item) === key);
+        }
+
+        function getUserTextVotes() {
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) return [];
+            const allUserTextVotes = JSON.parse(localStorage.getItem('textUserVotes') || '{}');
+            return allUserTextVotes[currentUserId] || [];
+        }
+
+        function saveUserTextVotes(votes) {
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) return;
+            const allUserTextVotes = JSON.parse(localStorage.getItem('textUserVotes') || '{}');
+            allUserTextVotes[currentUserId] = votes;
+            localStorage.setItem('textUserVotes', JSON.stringify(allUserTextVotes));
+        }
+
+        function hasVotedOnTextSubmission(textKey) {
+            const votes = getUserTextVotes();
+            return votes.includes(textKey);
+        }
+
+        function getTextSubmissionVotes(textKey) {
+            const textVotes = JSON.parse(localStorage.getItem('textVotes') || '{}');
+            return textVotes[textKey] || 0;
+        }
+
+        function updateTextSubmissionVotes(textKey, voteCount) {
+            const textVotes = JSON.parse(localStorage.getItem('textVotes') || '{}');
+            textVotes[textKey] = voteCount;
+            localStorage.setItem('textVotes', JSON.stringify(textVotes));
+        }
+
+        window.voteForTextSubmission = function (textKey, ownerId) {
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) {
+                alert('Please log in to vote!');
+                return;
+            }
+            if (String(currentUserId) === String(ownerId)) {
+                alert('You cannot vote on your own submission!');
+                return;
+            }
+
+            const votes = getUserTextVotes();
+            if (votes.includes(textKey)) {
+                alert('You have already voted on this submission!');
+                return;
+            }
+            if (votes.length >= 3) {
+                alert('You have used all your text votes!');
+                return;
+            }
+
+            votes.push(textKey);
+            saveUserTextVotes(votes);
+            const newVotes = getTextSubmissionVotes(textKey) + 1;
+            updateTextSubmissionVotes(textKey, newVotes);
+            filterAndDisplayImages();
+        };
+
+        window.editTextSubmission = async function (textKey) {
+            const item = getTextSubmissionByKey(textKey);
+            if (!item) {
+                alert('Submission not found.');
+                return;
+            }
+            if (item.kind === 'avatarWorkshop') {
+                alert(
+                    'This submission type cannot be edited here. Ask the student to submit again from AI Art Studio if changes are needed. / 此類提交無法在此編輯，如需修改請學員於 AI 藝術工作室重新提交。'
+                );
+                return;
+            }
+            const currentUserId = localStorage.getItem('currentUserId');
+            const isAdmin = currentUserId === '55';
+            if (currentUserId !== String(item.userId) && !isAdmin) {
+                alert('You can only edit your own submissions!');
+                return;
+            }
+            if (item.source !== 'firestore' || !item.id) {
+                alert('Written submissions from Firebase are disconnected. Nothing to edit here.');
+                return;
+            }
+            const nextText = prompt('Edit submission text:', String(item.text || ''));
+            if (nextText == null) return;
+            const updatedText = String(nextText).trim();
+            if (!updatedText) {
+                alert('Text cannot be empty.');
+                return;
+            }
+            try {
+                alert('Firestore is disconnected; saving edits here is disabled.');
+            } catch (err) {
+                console.error('Edit text submission failed:', err);
+                alert('Failed to edit text submission.');
+            }
+        };
+
+        window.deleteTextSubmission = async function (textKey) {
+            const item = getTextSubmissionByKey(textKey);
+            if (!item) {
+                alert('Submission not found.');
+                return;
+            }
+            const currentUserId = localStorage.getItem('currentUserId');
+            const isAdmin = currentUserId === '55';
+            if (currentUserId !== String(item.userId) && !isAdmin) {
+                alert('You can only delete your own submissions!');
+                return;
+            }
+            if (item.source !== 'firestore' || !item.id) {
+                alert('Nothing to delete here.');
+                return;
+            }
+            if (!confirm('Delete this submission permanently? / 確定永久刪除此提交？')) return;
+
+            if (item.kind === 'avatarWorkshop') {
+                const db = getTeacherFirestore();
+                if (!db) {
+                    alert('Firestore is not ready.');
+                    return;
+                }
+                const coll = item.fbCollection;
+                if (!coll) {
+                    alert('Unknown submission source.');
+                    return;
+                }
+                try {
+                    await deleteDoc(doc(db, coll, item.id));
+                    await loadWrittenSubmissionCards();
+                } catch (err) {
+                    console.error(err);
+                    alert(err.message || 'Delete failed.');
+                }
+                return;
+            }
+
+            alert('Written submissions from Firebase are disconnected. Nothing to delete here.');
+        };
+
+        // Function to get user-specific votes
+        function getUserVotes() {
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) return [];
+
+            const allUserVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
+            return allUserVotes[currentUserId] || [];
+        }
+
+        // Function to save user-specific votes
+        function saveUserVotes(votes) {
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) return;
+
+            const allUserVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
+            allUserVotes[currentUserId] = votes;
+            localStorage.setItem('userVotes', JSON.stringify(allUserVotes));
+        }
+
+        // Function to check if user has voted on a specific image
+        function hasVotedOnImage(imageName) {
+            const userVotes = getUserVotes();
+            return userVotes.includes(imageName);
+        }
+
+        // Function to get votes for an image from localStorage
+        function getImageVotes(imageName) {
+            const imageVotes = JSON.parse(localStorage.getItem('imageVotes') || '{}');
+            return imageVotes[imageName] || 0;
+        }
+
+        // Function to update image votes in localStorage
+        function updateImageVotes(imageName, newVoteCount) {
+            const imageVotes = JSON.parse(localStorage.getItem('imageVotes') || '{}');
+            imageVotes[imageName] = newVoteCount;
+            localStorage.setItem('imageVotes', JSON.stringify(imageVotes));
+        }
+
+        // Function to vote for an image
+        window.voteForImage = function (imageName, imageUserId) {
+            const currentUserId = localStorage.getItem('currentUserId');
+
+            if (!currentUserId) {
+                alert('Please log in to vote!');
+                return;
+            }
+
+            // Check if user is trying to vote on their own image
+            if (currentUserId === imageUserId) {
+                alert('You cannot vote on your own image!');
+                return;
+            }
+
+            // Get current user's votes
+            const userVotes = getUserVotes();
+            const totalVotesUsed = userVotes.length;
+
+            // Check if user has already voted on this image
+            if (hasVotedOnImage(imageName)) {
+                alert('You have already voted on this image!');
+                return;
+            }
+
+            // Check if user has used all their votes
+            if (totalVotesUsed >= 3) {
+                alert('You have used all your votes!');
+                return;
+            }
+
+            // Add vote to user's voting history
+            userVotes.push(imageName);
+            saveUserVotes(userVotes);
+
+            // Get current vote count for this image and increment it
+            const currentVotes = getImageVotes(imageName);
+            const newVoteCount = currentVotes + 1;
+            updateImageVotes(imageName, newVoteCount);
+
+            // Update the image object in allImages array
+            const imageIndex = allImages.findIndex(img => img.name === imageName);
+            if (imageIndex !== -1) {
+                allImages[imageIndex].votes = newVoteCount;
+            }
+
+            // Update display
+            updateVoteDisplay();
+            updateVoteButton(imageName, false);
+
+            // Update vote count display immediately
+            const voteCountElement = document.getElementById(`votes-${imageName}`);
+            if (voteCountElement) {
+                voteCountElement.textContent = newVoteCount;
+            }
+
+            // Update the vote button to show it's been voted on
+            const voteButton = document.querySelector(`button[data-filename="${imageName}"]`);
+            if (voteButton) {
+                voteButton.className = 'btn btn-sm btn-secondary';
+                voteButton.disabled = true;
+                voteButton.innerHTML = '<i class="fas fa-check"></i> Voted';
+            }
+
+            alert(`Vote recorded successfully! This image now has ${newVoteCount} vote(s).`);
+        }
+
+        // Function to update vote display
+        function updateVoteDisplay() {
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) {
+                const votesRemainingElement = document.getElementById('votesRemaining');
+                if (votesRemainingElement) {
+                    votesRemainingElement.textContent = '0';
+                }
+                return;
+            }
+
+            const userVotes = getUserVotes();
+            const votesRemaining = 3 - userVotes.length;
+
+            const votesRemainingElement = document.getElementById('votesRemaining');
+            if (votesRemainingElement) {
+                votesRemainingElement.textContent = votesRemaining;
+            }
+
+            // Update vote status color
+            const voteStatus = document.getElementById('voteStatus');
+            if (votesRemaining === 0) {
+                voteStatus.className = 'alert alert-warning mb-0';
+            } else if (votesRemaining <= 1) {
+                voteStatus.className = 'alert alert-info mb-0';
+            } else {
+                voteStatus.className = 'alert alert-success mb-0';
+            }
+        }
+
+        // Function to update vote button state
+        function updateVoteButton(imageName, canVote) {
+            const voteButton = document.querySelector(`button[data-filename="${imageName}"]`);
+            if (voteButton) {
+                if (canVote) {
+                    voteButton.className = 'btn btn-sm btn-success';
+                    voteButton.disabled = false;
+                } else {
+                    voteButton.className = 'btn btn-sm btn-secondary';
+                    voteButton.disabled = true;
+                }
+            }
+        }
+
+        // Function to reset votes (for testing purposes)
+        window.resetVotes = function () {
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) {
+                alert('Please log in to reset votes!');
+                return;
+            }
+
+            if (confirm('Are you sure you want to reset your votes? This will clear your voting history.')) {
+                // Reset only current user's votes
+                const allUserVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
+                delete allUserVotes[currentUserId];
+                localStorage.setItem('userVotes', JSON.stringify(allUserVotes));
+
+                // Reset image vote counts
+                localStorage.setItem('imageVotes', JSON.stringify({}));
+
+                updateVoteDisplay();
+                filterAndDisplayImages(); // Refresh the display
+                alert('Your votes have been reset!');
+            }
+        }
+
+        // Image editing variables
+        let currentEditImage = null;
+        let currentRotation = 0;
+
+        // Function to open edit modal
+        window.editImage = function (imageUrl, imageName, imageUserId) {
+            const currentUserId = localStorage.getItem('currentUserId');
+
+            // Allow owner or admin (userId 55) to edit
+            const isAdmin = currentUserId === '55';
+            if (currentUserId !== imageUserId && !isAdmin) {
+                alert('You can only edit your own images!');
+                return;
+            }
+
+            currentEditImage = { url: imageUrl, name: imageName, userId: imageUserId };
+            currentRotation = 0;
+
+            // Set the image in the edit modal
+            const editImageElement = document.getElementById('editImage');
+            editImageElement.src = imageUrl;
+            editImageElement.style.transform = 'rotate(0deg)';
+
+            // Open the edit modal
+            const editModal = new bootstrap.Modal(document.getElementById('editImageModal'));
+            editModal.show();
+        }
+
+        // Function to rotate image
+        window.rotateImage = function (degrees) {
+            const editImageElement = document.getElementById('editImage');
+            currentRotation = (currentRotation + degrees) % 360;
+            editImageElement.style.transform = `rotate(${currentRotation}deg)`;
+        }
+
+        // Function to reset rotation
+        window.resetRotation = function () {
+            const editImageElement = document.getElementById('editImage');
+            currentRotation = 0;
+            editImageElement.style.transform = 'rotate(0deg)';
+        }
+
+        // Function to save image changes
+        window.saveImageChanges = async function () {
+            if (!currentEditImage) {
+                alert('No image selected for editing!');
+                return;
+            }
+
+            if (currentRotation === 0) {
+                alert('No changes to save!');
+                return;
+            }
+
+            // Show loading state
+            const saveButton = document.querySelector('#editImageModal .btn-success');
+            const originalText = saveButton.innerHTML;
+            saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            saveButton.disabled = true;
+
+            try {
+                await saveImageWithCanvas();
+            } catch (error) {
+                console.error('Primary approach failed:', error);
+
+                try {
+                    await saveImageFallback();
+                } catch (fallbackError) {
+                    console.error('Fallback approach also failed:', fallbackError);
+                    alert(fallbackError.message || 'Could not save rotation.');
+                }
+            } finally {
+                saveButton.innerHTML = originalText;
+                saveButton.disabled = false;
+            }
+        }
+
+        // Primary approach using canvas
+        async function saveImageWithCanvas() {
+            // Create a canvas to apply rotation
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Create a new image element
+            const img = new Image();
+
+            // Set up image loading with proper error handling
+            const imageLoadPromise = new Promise((resolve, reject) => {
+                img.onload = () => resolve(img);
+                img.onerror = () => reject(new Error('Failed to load image'));
+
+                // Try to load the image with CORS handling
+                img.crossOrigin = 'anonymous';
+                img.src = currentEditImage.url;
+
+                // Fallback: if image is already loaded
+                if (img.complete) {
+                    resolve(img);
+                }
+            });
+
+            // Wait for image to load
+            const loadedImg = await imageLoadPromise;
+
+            // Calculate new dimensions based on rotation
+            let newWidth, newHeight;
+            if (currentRotation === 90 || currentRotation === 270) {
+                newWidth = loadedImg.height;
+                newHeight = loadedImg.width;
+            } else {
+                newWidth = loadedImg.width;
+                newHeight = loadedImg.height;
+            }
+
+            // Set canvas size
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            // Clear canvas and set background
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Move to center and rotate
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate((currentRotation * Math.PI) / 180);
+            ctx.drawImage(loadedImg, -loadedImg.width / 2, -loadedImg.height / 2);
+
+            // Convert canvas to blob with error handling
+            const blobPromise = new Promise((resolve, reject) => {
+                try {
+                    canvas.toBlob((blob) => {
+                        if (blob) {
+                            resolve(blob);
+                        } else {
+                            reject(new Error('Failed to create image blob'));
+                        }
+                    }, 'image/png', 0.9);
+                } catch (error) {
+                    reject(error);
+                }
+            });
+
+            const rotatedBlob = await blobPromise;
+
+            // Local preview only (no cloud upload after Firebase removal)
+            const newUrl = URL.createObjectURL(rotatedBlob);
+
+            // Update the image object in allImages array
+            const imageIndex = allImages.findIndex(img => img.name === currentEditImage.name);
+            if (imageIndex !== -1) {
+                allImages[imageIndex].url = newUrl;
+            }
+
+            // Update the current edit image URL
+            currentEditImage.url = newUrl;
+
+            // Update the edit modal image
+            const editImageElement = document.getElementById('editImage');
+            editImageElement.src = newUrl;
+            editImageElement.style.transform = 'rotate(0deg)';
+
+            // Refresh the display
+            filterAndDisplayImages();
+
+            alert('Image rotation saved as a local preview in this browser tab.');
+
+            // Close the edit modal
+            const editModal = bootstrap.Modal.getInstance(document.getElementById('editImageModal'));
+            editModal.hide();
+        }
+
+        // Fallback approach - just update the display with rotation info
+        async function saveImageFallback() {
+            // Store rotation information in localStorage for this image
+            const imageRotations = JSON.parse(localStorage.getItem('imageRotations') || '{}');
+            imageRotations[currentEditImage.name] = currentRotation;
+            localStorage.setItem('imageRotations', JSON.stringify(imageRotations));
+
+            // Update the display to show the rotation
+            const editImageElement = document.getElementById('editImage');
+            editImageElement.style.transform = 'rotate(0deg)';
+
+            // Refresh the display
+            filterAndDisplayImages();
+
+            alert('Image rotation applied to display. Note: This is a temporary rotation that will be visible during this session.');
+
+            // Close the edit modal
+            const editModal = bootstrap.Modal.getInstance(document.getElementById('editImageModal'));
+            editModal.hide();
+        }
+
+        // Function to delete current image from edit modal
+        window.deleteCurrentImage = function () {
+            if (!currentEditImage) {
+                alert('No image selected for deletion!');
+                return;
+            }
+
+            if (confirm('Are you sure you want to delete this image?')) {
+                deleteImage(currentEditImage.name);
+
+                // Close the edit modal
+                const editModal = bootstrap.Modal.getInstance(document.getElementById('editImageModal'));
+                editModal.hide();
+            }
+        }
+    </script>
+
+    <script>
+        // Update user ID display in the navbar
+        const userIdDisplay = document.getElementById('userIdDisplay');
+        const currentUserId = localStorage.getItem('currentUserId');
+
+        if (userIdDisplay && currentUserId) {
+            userIdDisplay.textContent = `User ID: ${currentUserId} ${getEmojiForUserId(currentUserId)}`;
+            userIdDisplay.classList.remove('d-none');
+        }
+    </script>
+    <script src="script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

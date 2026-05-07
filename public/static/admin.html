@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IW01 BOKSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #D87D3A;
+            --secondary-color: #724D00;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --border-color: #dee2e6;
+            --text-color: #495057;
+            --hover-color: #c06a2e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: var(--primary-color) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .site-navbar-inner {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        @media (min-width: 992px) {
+            .site-navbar-inner {
+                flex-wrap: nowrap;
+            }
+        }
+
+        .navbar-toggler {
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            padding: 0.25rem 0.5rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+        }
+
+        .navbar-toggler-icon {
+            display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100%;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        @media (max-width: 991.98px) {
+            .navbar .navbar-toggler {
+                margin-left: auto;
+                flex-shrink: 0;
+            }
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .navbar-brand-logos {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.25rem 0.5rem;
+            margin-right: 0.35rem;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .navbar-brand-logos > .navbar-brand {
+            margin: 0;
+            padding: 0.25rem 0;
+            line-height: 1;
+            color: transparent !important;
+            font-size: 0;
+        }
+
+        .navbar-logo-img {
+            display: block;
+            height: auto;
+            width: auto;
+            max-height: 44px;
+            max-width: min(44vw, 140px);
+            object-fit: contain;
+        }
+
+        @media (min-width: 400px) {
+            .navbar-logo-img {
+                max-height: 50px;
+                max-width: min(42vw, 155px);
+            }
+        }
+
+        @media (min-width: 576px) {
+            .navbar-logo-img {
+                max-height: 54px;
+                max-width: 180px;
+            }
+
+            .navbar-logo-img--school {
+                max-width: min(48vw, 220px);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar-logo-img {
+                max-height: 60px;
+            }
+
+            .navbar-logo-img--flu {
+                max-width: 110px;
+            }
+
+            .navbar-logo-img--school {
+                max-width: 220px;
+            }
+        }
+
+        .nav-link {
+            color: white !important;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .image-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .image-info {
+            padding: 15px;
+        }
+
+        .image-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-admin {
+            flex: 1;
+            font-size: 0.8rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-color);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .login-form {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            padding: 12px 15px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(216, 125, 58, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            border: none;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            border: none;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            border: none;
+            color: var(--dark-color);
+        }
+
+        .gallery-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .alert {
+            border-radius: 8px;
+            border: none;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .image-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            #adminNavCollapse {
+                flex-basis: 100%;
+                margin-top: 0.5rem;
+                padding-top: 0.75rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.25);
+            }
+
+            #adminNavCollapse .navbar-nav {
+                width: 100%;
+                align-items: stretch !important;
+            }
+
+            #adminNavCollapse .navbar-nav .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid site-navbar-inner px-2 px-sm-3">
+            <div class="navbar-brand-logos flex-shrink-0">
+                <a class="navbar-brand flu_logo" href="https://futureleadersunion.netlify.app/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="./images/FLU_logo2.png"
+                        class="navbar-logo-img navbar-logo-img--flu d-inline-block align-top" alt="Future Leaders Union"
+                        width="100" height="40">
+                </a>
+                <a class="navbar-brand school_logo" href="https://www.skhscps.edu.hk/tc/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="data:image/jpeg;base64,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"
+                        class="navbar-logo-img navbar-logo-img--school d-inline-block align-top" alt="SKM">
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavCollapse"
+                aria-controls="adminNavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-lg-end" id="adminNavCollapse">
+                <div class="navbar-nav flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 py-lg-0">
+                    <button type="button" class="btn btn-outline-light btn-sm" id="langBtn" title="Switch language"
+                        aria-label="Switch language">中文</button>
+                    <button class="btn btn-outline-light" id="logoutBtn" style="display: none;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Form -->
+    <div id="loginForm" style="display: none;">
+        <div class="login-form">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-lock"></i> <span data-i18n="admin.login">Admin Login</span>
+            </h2>
+            <form id="adminLoginForm">
+                <div class="mb-3">
+                    <label for="adminPassword" class="form-label" data-i18n="admin.password">Password</label>
+                    <input type="password" class="form-control" id="adminPassword" required>
+                </div>
+                <div class="alert alert-danger" id="loginError" style="display: none;"></div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-sign-in-alt"></i> <span data-i18n="admin.loginButton">Login</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-container" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-images"></i> <span data-i18n="admin.imageManagement">Image Management</span></h1>
+            <button class="btn btn-primary" onclick="loadImages()">
+                <i class="fas fa-sync-alt"></i> <span data-i18n="admin.refresh">Refresh</span>
+            </button>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" id="totalImages">0</div>
+                <div class="stat-label" data-i18n="admin.totalImages">Total Images</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="galleryImages">0</div>
+                <div class="stat-label" data-i18n="admin.inGallery">In Gallery</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="todayImages">0</div>
+                <div class="stat-label" data-i18n="admin.today">Today</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="totalSize">0 MB</div>
+                <div class="stat-label" data-i18n="admin.totalSize">Total Size</div>
+            </div>
+        </div>
+
+        <!-- Gallery Control -->
+        <div class="stats-card">
+            <h4><i class="fas fa-sliders-h"></i> <span data-i18n="admin.gallerySettings">Gallery Settings</span></h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="autoApproveToggle">
+                        <label class="form-check-label" for="autoApproveToggle" data-i18n="admin.autoApprove">
+                            Auto-approve new images for gallery
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-warning" onclick="bulkApprove()">
+                        <i class="fas fa-check-double"></i> <span data-i18n="admin.approveAllPending">Approve All Pending</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading" id="loadingSpinner">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden" data-i18n="admin.loading">Loading...</span>
+            </div>
+        </div>
+
+        <!-- Image Grid -->
+        <div id="imageGrid" class="image-grid"></div>
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <i class="fas fa-image"></i>
+            <h4 data-i18n="admin.noImagesFound">No images found</h4>
+            <p data-i18n="admin.noImagesDescription">Images will appear here once they are generated by users.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Simple admin authentication (for demo: password is 'admin123')
+        const ADMIN_PASSWORD = 'admin123'; // Change this in production!
+
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+        }
+
+        function setAuth(auth) {
+            if (auth) {
+                localStorage.setItem('adminAuth', '1');
+            } else {
+                localStorage.removeItem('adminAuth');
+            }
+        }
+
+        function isAuth() {
+            return localStorage.getItem('adminAuth') === '1';
+        }
+
+        document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const pwd = document.getElementById('adminPassword').value;
+            if (pwd === ADMIN_PASSWORD) {
+                setAuth(true);
+                showDashboard();
+                loadImages();
+            } else {
+                document.getElementById('loginError').innerText = (window.getTranslation && window.getTranslation('admin.incorrectPassword')) || 'Incorrect password';
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            setAuth(false);
+            showLogin();
+        });
+
+        // Re-apply dynamic content when language changes
+        window.onLanguageChange = function () {
+            if (isAuth()) loadImages();
+        };
+
+        // On page load
+        if (isAuth()) {
+            showDashboard();
+            loadImages();
+        } else {
+            showLogin();
+        }
+
+        // Fetch and display images
+        async function loadImages() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('imageGrid').innerHTML = '';
+            document.getElementById('emptyState').style.display = 'none';
+
+            try {
+                const res = await fetch('/api/admin/images');
+                const data = await res.json();
+
+                document.getElementById('totalImages').innerText = data.total;
+                document.getElementById('galleryImages').innerText = data.inGallery;
+                document.getElementById('todayImages').innerText = data.today;
+                document.getElementById('totalSize').innerText = data.totalSizeMB + ' MB';
+
+                if (data.images.length === 0) {
+                    document.getElementById('emptyState').style.display = 'block';
+                } else {
+                    const t = window.getTranslation || (k => k);
+                    document.getElementById('imageGrid').innerHTML = data.images.map(img => `
+                        <div class="image-card">
+                            <img src="${img.url}" alt="Generated Image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOWZhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5NTA1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBmb3VuZDwvdGV4dD48L3N2Zz4='">
+                            <div class="image-info">
+                                <div class="mb-2"><strong>${t('admin.prompt')}</strong> ${img.prompt || t('admin.noPrompt')}</div>
+                                <div class="mb-2"><strong>${t('admin.user')}</strong> ${img.userId || t('admin.unknown')}</div>
+                                <div class="mb-2"><strong>${t('admin.date')}</strong> ${new Date(img.timestamp).toLocaleString()}</div>
+                                
+                                <div class="gallery-toggle">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="gallery_${img.id}" 
+                                               ${img.inGallery ? 'checked' : ''} 
+                                               onchange="toggleGallery('${img.id}', this.checked)">
+                                        <label class="form-check-label" for="gallery_${img.id}">
+                                            ${t('admin.showInGallery')}
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="image-actions">
+                                    <button class="btn btn-danger btn-admin" onclick="deleteImage('${img.id}')">
+                                        <i class="fas fa-trash"></i> ${t('admin.delete')}
+                                    </button>
+                                    <a class="btn btn-success btn-admin" href="${img.url}" download>
+                                        <i class="fas fa-download"></i> ${t('admin.download')}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                console.error('Failed to load images:', err);
+                alert('Failed to load images: ' + err.message);
+            } finally {
+                document.getElementById('loadingSpinner').style.display = 'none';
+            }
+        }
+
+        // Toggle image in gallery
+        async function toggleGallery(id, inGallery) {
+            try {
+                const res = await fetch(`/api/admin/images/${id}/gallery`, {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ inGallery })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    loadImages(); // Refresh to update stats
+                } else {
+                    alert('Failed to update gallery status');
+                }
+            } catch (err) {
+                alert('Error updating gallery status: ' + err.message);
+            }
+        }
+
+        // Delete image
+        async function deleteImage(id) {
+            if (!confirm('Are you sure you want to delete this image?')) return;
+            try {
+                const res = await fetch('/api/admin/images/' + id, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    loadImages();
+                } else {
+                    alert('Failed to delete image');
+                }
+            } catch (err) {
+                alert('Error deleting image: ' + err.message);
+            }
+        }
+
+        // Bulk approve all pending images
+        async function bulkApprove() {
+            if (!confirm('Approve all pending images for gallery display?')) return;
+            try {
+                const res = await fetch('/api/admin/images/bulk-approve', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    loadImages();
+                    alert(`Approved ${data.approvedCount} images`);
+                } else {
+                    alert('Failed to approve images');
+                }
+            } catch (err) {
+                alert('Error approving images: ' + err.message);
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

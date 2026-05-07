@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IW01 BOKSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+    <!-- Firebase: merged progress in Firestore `avatar_workshop_progress`; audio in Storage `activity_submissions/` -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6f9fc 0%, #eef2f7 100%);
+        }
+
+        /* Custom navbar styling */
+        .navbar {
+            background-color: #FFFFFF !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 80px;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #333333;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: #D87D3A;
+        }
+
+
+
+        .text-rotator {
+            position: relative;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .text-item {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .text-item.active {
+            opacity: 1;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            position: relative;
+            top: 300px;
+        }
+
+
+
+        .btn {
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        h4.mb-3 {
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 2rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-1px);
+        }
+
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .responsive-text {
+                font-size: 14px;
+                /* Adjust for small screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 16px;
+            }
+
+            .headline-container img {
+                width: 100%;
+                padding: 10%;
+            }
+        }
+
+        @media (min-width: 577px) and (max-width: 768px) {
+            .responsive-text {
+                font-size: 16px;
+                /* Adjust for medium screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 992px) {
+            .responsive-text {
+                font-size: 18px;
+                /* Adjust for large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 20px;
+            }
+        }
+
+        @media (min-width: 993px) and (max-width: 1200px) {
+            .responsive-text {
+                font-size: 20px;
+                /* Adjust for extra large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+        }
+
+        @media (min-width: 1201px) and (max-width: 1400px) {
+            .responsive-text {
+                font-size: 22px;
+                /* Adjust for larger extra large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+        }
+
+        @media (min-width: 1401px) and (max-width: 1600px) {
+            .responsive-text {
+                font-size: 24px;
+                /* Adjust for even larger screens */
+            }
+
+        }
+
+        @media (min-width: 1601px) and (max-width: 18000px) {
+            .responsive-text {
+                font-size: 26px;
+                /* Adjust for very large screens up to 18,000 pixels */
+            }
+        }
+
+        .scrollable-textarea {
+            height: 200px;
+            /* Set a fixed height */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
+        #sectionTitle {
+            transition: opacity 0.3s ease;
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+
+
+        /* ... existing styles ... */
+
+        .section-box {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .section-box:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .section-box img.round {
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-box {
+            background-color: transparent;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .section-box {
+                padding: 1rem;
+            }
+        }
+
+        /* iPad Air (820 x 1180) specific optimizations */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .navbar {
+                height: 70px !important;
+                padding: 0 1rem !important;
+            }
+
+            .navbar-brand-logos>.navbar-brand {
+                margin-right: 0.25rem !important;
+            }
+        }
+
+        #userIdDisplay {
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            margin-right: 0.5rem !important;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem !important;
+        }
+
+        .navbar-nav .btn {
+            font-size: 0.85rem;
+            padding: 0.4rem 0.8rem;
+        }
+
+        .navbar-toggler {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .navbar-nav {
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        /* Specific iPad Air portrait optimization */
+        @media (min-width: 768px) and (max-width: 834px) and (orientation: portrait) {
+            .navbar {
+                height: 65px !important;
+                padding: 0 0.75rem !important;
+            }
+
+            #userIdDisplay {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+
+            .navbar-nav .nav-link {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem !important;
+            }
+
+            .navbar-nav .btn {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+
+        li.active {
+            font-weight: bold;
+        }
+
+        /* Add hover animation for the buttons */
+        .btn.rounded-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: inherit !important;
+            /* Keep the original text color */
+        }
+
+        /* Ensure WhatsApp button text colors stay fixed */
+        .btn.btn-warning.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-warning.rounded-pill:hover {
+            color: white !important;
+        }
+
+        .btn.btn-info.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-info.rounded-pill:hover {
+            color: white !important;
+        }
+
+        .btn.btn-primary.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-primary.rounded-pill:hover {
+            color: white !important;
+        }
+
+        /* Prompt Card Styles */
+        .card.mb-3 {
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .card.mb-3:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background-color: var(--secondary-color) !important;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1.25rem;
+        }
+
+        .prompt-card .card-header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .action-buttons {
+            opacity: 1;
+        }
+
+        .card-body:hover .action-buttons {
+            opacity: 1;
+        }
+
+        .action-buttons .btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            border: none;
+        }
+
+        .action-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-buttons .btn i {
+            font-size: 0.8rem;
+        }
+
+        .copy-btn {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .copy-btn:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #f8f9fa;
+            color: #0d6efd;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .edit-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #f8f9fa;
+            color: #dc3545;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .delete-btn:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2d3b;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-text {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #445566;
+        }
+
+        .card {
+            border: none;
+            border-radius: 25px;
+            background: white;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .upload-area {
+            border: 3px dashed #FF9A9E;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 154, 158, 0.05);
+        }
+
+        .upload-area:hover {
+            border-color: #FF5E62;
+            background: rgba(255, 154, 158, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-area i {
+            color: #FF5E62;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 15px;
+            border: 2px solid #eef2f7;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #FF9A9E;
+            box-shadow: 0 0 0 0.2rem rgba(255, 154, 158, 0.25);
+        }
+
+        .form-label {
+            color: #2C3E50;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FF9A9E 0%, #FF5E62 100%);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 94, 98, 0.3);
+        }
+
+        .btn-secondary {
+            background: #2C3E50;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background: #34495E;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 62, 80, 0.3);
+        }
+
+        .preview-container {
+            position: relative;
+            max-width: 100%;
+            margin: 1.5rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .preview-container:hover {
+            transform: scale(1.02);
+        }
+
+        .preview-container img {
+            max-width: 100%;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .remove-image:hover {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        .result-container {
+            position: relative;
+            max-width: 100%;
+            margin: 1.5rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .result-container:hover {
+            transform: scale(1.02);
+        }
+
+        .result-container img {
+            max-width: 100%;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .action-buttons {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-buttons button:hover {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        .action-buttons i {
+            color: #FF5E62;
+            font-size: 1.2rem;
+        }
+
+        .alert {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-check-input:checked {
+            background-color: #FF5E62;
+            border-color: #FF5E62;
+        }
+
+        .form-check-label {
+            color: #2C3E50;
+            font-weight: 500;
+        }
+
+        #userIdDisplay {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #2C3E50;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .spinner-border {
+            color: #FF5E62;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .btn-primary:active {
+            animation: pulse 0.3s ease-in-out;
+        }
+
+        .btn-outline-primary {
+            color: #0d6efd;
+            border: 1px solid #0d6efd;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            color: white;
+            background-color: #0d6efd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+        }
+
+        .btn_show {
+            display: block !important;
+            color: #2C3E50;
+            border: 1px solid #34495E;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .activity-section {
+            padding: 1rem 0;
+        }
+
+        .activity-instruction {
+            background-color: #f8f9fa;
+            border-left: 4px solid #FF5E62;
+            border-radius: 15px;
+            padding: 12px 1rem;
+            margin: 0;
+            min-height: 60px;
+            line-height: 1.5;
+            color: #2C3E50;
+        }
+
+        .gallery-upload-area {
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #quickUploadPreview img {
+            max-width: 100%;
+            border-radius: 20px;
+        }
+
+        /* Exercise 2: Stop recording — black label & outline in all states (idle / recording / disabled) */
+        .btn-heygen-stop {
+            color: #000 !important;
+            border: 2px solid #000 !important;
+            background-color: transparent;
+        }
+
+        .btn-heygen-stop:hover:not(:disabled) {
+            color: #000 !important;
+            border-color: #000 !important;
+            background-color: rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-heygen-stop:active:not(:disabled) {
+            color: #000 !important;
+            border-color: #000 !important;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-heygen-stop:disabled {
+            color: #000 !important;
+            border-color: #000 !important;
+            background-color: transparent;
+            opacity: 1 !important;
+            cursor: not-allowed;
+        }
+
+        .btn-heygen-stop:focus-visible {
+            color: #000 !important;
+            border-color: #000 !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-heygen-stop .bi {
+            color: #000 !important;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../static/style_home.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-2 px-sm-3 px-lg-5">
+        <div class="container-fluid site-navbar-inner px-0">
+            <div class="navbar-brand-logos">
+                <a class="navbar-brand flu_logo" href="https://futureleadersunion.netlify.app/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="../static/images/FLU_logo2.png"
+                        class="navbar-logo-img navbar-logo-img--flu d-inline-block align-top" alt="Future Leaders Union"
+                        width="100" height="40">
+                </a>
+                <a class="navbar-brand school_logo" href="https://www.skhscps.edu.hk/tc/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="data:image/jpeg;base64,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"
+                        class="navbar-logo-img navbar-logo-img--school d-inline-block align-top" alt="SKM">
+                </a>
+            </div>
+
+            <span id="userIdDisplay" class="text-black me-3 d-none d-md-inline">User: <span id="userId"></span></span>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mx-2 align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../static/index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item" id="classPptLink">
+                        <a class="nav-link" href="../static/classppt.html" data-i18n="nav.lessons">Lessons</a>
+                    </li>
+                    <li class="nav-item active" id="imgGenLink">
+                        <a class="nav-link" href="../img-gen/img_gen.html" data-i18n="nav.aiArtStudio">AI Art Studio</a>
+                    </li>
+                    <li class="nav-item d-none" id="teacherArea">
+                        <a class="nav-link" href="../static/teacherdashboard.html" data-i18n="nav.gallery">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-outline-secondary btn-sm me-2" id="langBtn"
+                            title="Switch language" aria-label="Switch language">中文</button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="logout()" class="btn btn-secondary" id="logoutBtn"
+                            data-i18n="nav.logout">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-5 mt-5">
+
+        <!-- Main Content -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div id="heygenWorkshopSection">
+                            <h2 class="h5 mb-3 fw-semibold" data-i18n="imgGen.heygenWorkshopTitle">AI avatar &amp; tutor
+                                exercises</h2>
+                            <p class="activity-instruction mb-4" data-i18n="imgGen.heygenWorkshopIntro">Choose an
+                                exercise
+                                from the menu, complete it, and submit. You may finish them in any order. Each save
+                                updates
+                                your progress for teachers on the dashboard.</p>
+
+                            <div class="mb-4">
+                                <label for="heygenExerciseSelect" class="form-label"
+                                    data-i18n="imgGen.selectHeygenExercise">Select exercise</label>
+                                <select class="form-select" id="heygenExerciseSelect">
+                                    <option value="1" data-i18n="imgGen.heygenOpt1">1) AI avatar script (text)</option>
+                                    <option value="2" data-i18n="imgGen.heygenOpt2">2) HeyGen voice-training audio
+                                    </option>
+                                    <option value="3" data-i18n="imgGen.heygenOpt3">3) HeyGen avatar share link</option>
+                                    <option value="4" data-i18n="imgGen.heygenOpt4">4) Perplexity AI tutor link</option>
+                                </select>
+                            </div>
+
+                            <!-- Exercise 1 -->
+                            <div id="heygenEx1" class="heygen-exercise activity-section">
+                                <label class="form-label" data-i18n="imgGen.heygenStep1Label">1. One-minute AI avatar
+                                    script</label>
+                                <p class="small text-muted mb-2" data-i18n="imgGen.heygenStep1Hint">Paste the full
+                                    script
+                                    for your AI avatar—about one minute when read aloud.</p>
+                                <textarea class="form-control scrollable-textarea" id="heygenScriptInput" rows="8"
+                                    data-i18n-placeholder="imgGen.heygenStep1Placeholder"
+                                    placeholder="Your script..."></textarea>
+                                <button type="button" class="btn btn-primary mt-3" id="submitHeygenEx1Btn">
+                                    <span id="submitHeygenEx1Spinner"
+                                        class="spinner-border spinner-border-sm d-none me-2"></span>
+                                    <span data-i18n="imgGen.heygenSubmitExercise">Submit this exercise</span>
+                                </button>
+                            </div>
+
+                            <!-- Exercise 2 -->
+                            <div id="heygenEx2" class="heygen-exercise activity-section d-none">
+                                <label class="form-label" data-i18n="imgGen.heygenStep2Label">2. HeyGen voice-training
+                                    audio</label>
+                                <p class="small text-muted mb-2" data-i18n="imgGen.heygenStep2HintRecord">Read aloud the
+                                    script that HeyGen gives you for voice training. On your phone, use this page over
+                                    HTTPS
+                                    and allow the microphone—or record elsewhere and upload the file below.</p>
+                                <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+                                    <button type="button" class="btn btn-outline-primary" id="heygenStartRecordBtn">
+                                        <i class="bi bi-mic-fill me-1"></i><span
+                                            data-i18n="imgGen.heygenStartRecording">Start
+                                            recording</span>
+                                    </button>
+                                    <button type="button" class="btn btn-heygen-stop" id="heygenStopRecordBtn"
+                                        disabled>
+                                        <i class="bi bi-stop-fill me-1"></i><span
+                                            data-i18n="imgGen.heygenStopRecording">Stop</span>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary d-none"
+                                        id="heygenClearRecordBtn">
+                                        <span data-i18n="imgGen.heygenDiscardRecording">Discard recording</span>
+                                    </button>
+                                    <span class="small text-muted ms-md-2" id="heygenRecordTimer"
+                                        aria-live="polite"></span>
+                                </div>
+                                <div id="heygenRecordStatus" class="small text-muted mb-2 d-none"></div>
+                                <audio id="heygenRecordPreview" class="w-100 mb-3 d-none" controls playsinline></audio>
+                                <hr class="my-3">
+                                <p class="small fw-semibold mb-2" data-i18n="imgGen.heygenOrUploadFile">Or upload an
+                                    audio
+                                    file</p>
+                                <input type="file" class="form-control" id="heygenAudioInput"
+                                    accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg,.webm">
+                                <div class="small text-muted mt-1" id="heygenAudioFileName" aria-live="polite"></div>
+                                <button type="button" class="btn btn-primary mt-3" id="submitHeygenEx2Btn">
+                                    <span id="submitHeygenEx2Spinner"
+                                        class="spinner-border spinner-border-sm d-none me-2"></span>
+                                    <span data-i18n="imgGen.heygenSubmitExercise">Submit this exercise</span>
+                                </button>
+                            </div>
+
+                            <!-- Exercise 3 -->
+                            <div id="heygenEx3" class="heygen-exercise activity-section d-none">
+                                <label class="form-label" for="heygenAvatarLinkInput"
+                                    data-i18n="imgGen.heygenStep3Label">3. HeyGen avatar share link</label>
+                                <p class="small text-muted mb-2" data-i18n="imgGen.heygenStep3Hint">Paste the public
+                                    share
+                                    URL of your finished HeyGen AI avatar or video.</p>
+                                <input type="url" class="form-control" id="heygenAvatarLinkInput"
+                                    data-i18n-placeholder="imgGen.heygenStep3Placeholder" placeholder="https://…"
+                                    autocomplete="url">
+                                <button type="button" class="btn btn-primary mt-3" id="submitHeygenEx3Btn">
+                                    <span id="submitHeygenEx3Spinner"
+                                        class="spinner-border spinner-border-sm d-none me-2"></span>
+                                    <span data-i18n="imgGen.heygenSubmitExercise">Submit this exercise</span>
+                                </button>
+                            </div>
+
+                            <!-- Exercise 4 -->
+                            <div id="heygenEx4" class="heygen-exercise activity-section d-none">
+                                <label class="form-label" for="perplexityTutorLinkInput"
+                                    data-i18n="imgGen.heygenStep4Label">4. Perplexity AI tutor link</label>
+                                <p class="small text-muted mb-2" data-i18n="imgGen.heygenStep4Hint">Paste the link to
+                                    your
+                                    Perplexity Space, project, or tutor thread.</p>
+                                <input type="url" class="form-control" id="perplexityTutorLinkInput"
+                                    data-i18n-placeholder="imgGen.heygenStep4Placeholder" placeholder="https://…"
+                                    autocomplete="url">
+                                <button type="button" class="btn btn-primary mt-3" id="submitHeygenEx4Btn">
+                                    <span id="submitHeygenEx4Spinner"
+                                        class="spinner-border spinner-border-sm d-none me-2"></span>
+                                    <span data-i18n="imgGen.heygenSubmitExercise">Submit this exercise</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="errorMessage" class="alert alert-danger mt-3 d-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="img_gen.js"></script>
+    <script src="../static/script.js"></script>
+
+    <script>
+        // Check login status when page loads
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentUserId = localStorage.getItem('currentUserId');
+
+            if (!currentUserId) {
+                // If not logged in, redirect to home page
+                window.location.href = '../static/index.html';
+            }
+        });
+    </script>
+</body>
+
+</html>

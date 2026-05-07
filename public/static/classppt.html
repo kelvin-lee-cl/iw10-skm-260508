@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>IW01 BOKSS</title>
+    <meta name="description"
+        content="IW06: Storytelling is a 4-lesson AI workshop for students aged 8-9. Participants will learn to leverage generative AI tools for creative writing, and storytelling. Through hands-on exercises, students will unlock new realms of narrative possibility by generating original text, images, and audio to bring their stories to life. For those seeking deeper practice, a 12-hour IW06 Practicum is available to further enhance Gen-AI arts skills. This workshop offers a unique opportunity to explore the intersection of technology and imagination. Prepare for an extraordinary adventure in AI-powered storytelling.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #F5F7FA;
+            --text-color: #2C3E50;
+            --border-color: #E5E9F2;
+            --hover-color: #357ABD;
+        }
+
+        body {
+            color: var(--text-color);
+            background-color: #FFFFFF;
+            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* Custom navbar styling */
+        .navbar {
+            background-color: #FFFFFF !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 80px;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: #333333;
+        }
+
+        .navbar-light .navbar-nav .nav-link:hover {
+            color: #D87D3A;
+        }
+
+
+        .text-rotator {
+            position: relative;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .text-item {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .text-item.active {
+            opacity: 1;
+        }
+
+        .button-container {
+            display: flex !important;
+            flex-direction: row;
+            justify-content: center;
+            position: relative;
+            top: 300px;
+        }
+
+        .headline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        .btn {
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        h4.mb-3 {
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 2rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-1px);
+        }
+
+        /* Full prompt on hover for copy-prompt-template buttons */
+        .prompt-tooltip .tooltip-inner {
+            max-width: 420px;
+            text-align: left;
+            white-space: normal;
+            padding: 0.6rem 0.75rem;
+        }
+
+        /* Tool link buttons with logos – two rows of 4 */
+        .tool-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            min-height: 100px;
+        }
+
+        .tool-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .tool-link-btn.survey-btn {
+            margin-top: 0.5rem;
+        }
+
+        .tool-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.25s ease;
+        }
+
+        .tool-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tool-link-btn img.tool-logo {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        /* Slide image: click to open in Canva, hover = enlarge hint */
+        .slide-image-link {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .slide-image-link:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .slide-image-link::after {
+            content: '\f065';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .slide-image-link:hover::after {
+            opacity: 1;
+        }
+
+        .slide-image-link img {
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* Useful prompt statement cards (copy to clipboard) */
+        .useful-prompts-wrap {
+            max-width: 1140px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .prompt-copy-card {
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+            border-radius: 12px;
+            border-color: var(--border-color) !important;
+        }
+
+        .prompt-copy-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .prompt-copy-card .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .prompt-copy-card .card-text {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .form-control {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
+        }
+
+        .scrollable-textarea {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+        }
+
+
+        iframe {
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .headline-container img {
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .responsive-text {
+                font-size: 14px;
+                /* Adjust for small screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 16px;
+            }
+
+            .headline-container img {
+                width: 100%;
+                padding: 10%;
+            }
+        }
+
+        @media (min-width: 577px) and (max-width: 768px) {
+            .responsive-text {
+                font-size: 16px;
+                /* Adjust for medium screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 992px) {
+            .responsive-text {
+                font-size: 18px;
+                /* Adjust for large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            .text-item h3 {
+                font-size: 20px;
+            }
+
+        }
+
+        @media (min-width: 993px) and (max-width: 1200px) {
+            .responsive-text {
+                font-size: 20px;
+                /* Adjust for extra large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+
+
+        }
+
+        @media (min-width: 1201px) and (max-width: 1400px) {
+            .responsive-text {
+                font-size: 22px;
+                /* Adjust for larger extra large screens */
+            }
+
+            .button-container {
+                display: none;
+            }
+        }
+
+        @media (min-width: 1401px) and (max-width: 1600px) {
+            .responsive-text {
+                font-size: 24px;
+                /* Adjust for even larger screens */
+            }
+
+        }
+
+        @media (min-width: 1601px) and (max-width: 18000px) {
+            .responsive-text {
+                font-size: 26px;
+                /* Adjust for very large screens up to 18,000 pixels */
+            }
+        }
+
+        .scrollable-textarea {
+            height: 200px;
+            /* Set a fixed height */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
+
+        #sectionTitle {
+            transition: opacity 0.3s ease;
+            margin-left: 1rem;
+            font-weight: 500;
+        }
+
+
+        /* ... existing styles ... */
+
+        .section-box {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .section-box:hover {
+            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .section-box img.round {
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .section-box {
+            background-color: transparent;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .section-box {
+                padding: 1rem;
+            }
+        }
+
+        li.active {
+            font-weight: bold;
+        }
+
+        /* Add hover animation for the buttons */
+        .btn.rounded-pill:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: inherit !important;
+            /* Keep the original text color */
+        }
+
+        /* Ensure WhatsApp button text colors stay fixed */
+        .btn.btn-warning.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-warning.rounded-pill:hover {
+            color: white !important;
+        }
+
+        .btn.btn-info.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-info.rounded-pill:hover {
+            color: white !important;
+        }
+
+        .btn.btn-primary.rounded-pill {
+            color: white !important;
+        }
+
+        .btn.btn-primary.rounded-pill:hover {
+            color: white !important;
+        }
+
+        /* Prompt Card Styles */
+        .card.mb-3 {
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .card.mb-3:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background-color: var(--secondary-color) !important;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.75rem 1.25rem;
+        }
+
+        .prompt-card .card-header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .action-buttons {
+            opacity: 1;
+        }
+
+        .card-body:hover .action-buttons {
+            opacity: 1;
+        }
+
+        .action-buttons .btn {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            border: none;
+        }
+
+        .action-buttons .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-buttons .btn i {
+            font-size: 0.8rem;
+        }
+
+        .copy-btn {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .copy-btn:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #f8f9fa;
+            color: #0d6efd;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .edit-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #f8f9fa;
+            color: #dc3545;
+            border: 1px solid #dee2e6 !important;
+        }
+
+        .delete-btn:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #bb2d3b;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-text {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #445566;
+        }
+
+        .modern-title {
+            font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top px-2 px-sm-3 px-lg-5">
+        <div class="container-fluid site-navbar-inner px-0">
+            <div class="navbar-brand-logos">
+                <a class="navbar-brand flu_logo" href="https://futureleadersunion.netlify.app/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="./images/FLU_logo2.png"
+                        class="navbar-logo-img navbar-logo-img--flu d-inline-block align-top" alt="Future Leaders Union"
+                        width="100" height="40">
+                </a>
+                <a class="navbar-brand school_logo" href="https://www.skhscps.edu.hk/tc/" target="_blank"
+                    rel="noopener noreferrer">
+                    <img src="data:image/jpeg;base64,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"
+                        class="navbar-logo-img navbar-logo-img--school d-inline-block align-top" alt="SKM">
+                </a>
+            </div>
+
+            <span id="userIdDisplay" class="text-black me-3">User: <span id="userId"></span></span>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mx-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" data-i18n="nav.home">Home</a>
+                    </li>
+                    <li class="nav-item active" id="classPptLink">
+                        <a class="nav-link" href="classppt.html" data-i18n="nav.lessons">Lessons</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../img-gen/img_gen.html" data-i18n="nav.aiArtStudio">AI Art Studio</a>
+                    </li>
+                    <li class="nav-item d-none" id="teacherArea">
+                        <a class="nav-link" href="teacherdashboard.html" data-i18n="nav.gallery">Gallery</a>
+                    </li>
+                    <button type="button" class="btn btn-outline-secondary btn-sm me-2" id="langBtn"
+                        title="Switch language" aria-label="Switch language">中文</button>
+                    <button onclick="logout()" class="btn btn-secondary" id="logoutBtn"
+                        data-i18n="nav.logout">Logout</button>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <!-- Inline Slides Viewer at the Top -->
+    <div class="container my-4">
+        <div class="d-flex justify-content-center align-items-center position-relative" style="min-height: 100px;">
+            <button class="btn btn-dark position-absolute top-50 start-0 translate-middle-y" id="slidePrevBtn"
+                style="z-index: 1000;">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <a id="slideImageLink" class="slide-image-link" href="https://canva.link/et5ga8u9dykx1ks" target="_blank"
+                rel="noopener noreferrer" title="Click to view in Canva">
+                <img id="slideImage" class="img-fluid" src="images/slides/24.png" alt="Slide"
+                    style="max-width: calc(100vw - 400px); width: auto; height: auto; padding-left: 200px; padding-right: 200px; max-height: 90vh;">
+            </a>
+            <button class="btn btn-dark position-absolute top-50 end-0 translate-middle-y" id="slideNextBtn"
+                style="z-index: 1000;">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="text-center mt-2">
+            <span id="slideCounter">24 / 42</span>
+        </div>
+    </div>
+
+    <div class="tool-links">
+        <div class="tool-links-row">
+
+            <a class="tool-link-btn" href="https://www.recraft.ai/" target="_blank" rel="noopener noreferrer"
+                title="Recraft">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=recraft.ai&sz=48" alt=""> Recraft
+            </a>
+            <a class="tool-link-btn" href="https://stackedit.io/app#" target="_blank" rel="noopener noreferrer"
+                title="StackEdit">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=stackedit.io&sz=48" alt="">
+                StackEdit
+            </a>
+            <a class="tool-link-btn" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"
+                title="Gemini">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=gemini.google.com&sz=48" alt="">
+                Gemini - Nano Banana
+            </a>
+
+        </div>
+        <div class="tool-links-row">
+
+
+            <a class="tool-link-btn" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer"
+                title="Perplexity">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=perplexity.ai&sz=48" alt="">
+                Perplexity
+            </a>
+
+            <a class="tool-link-btn"
+                href="https://app.sesame.com/?_gl=1*j3nlkr*_ga*MTM3NDAwNTEwMC4xNzY5NjU5MjMz*_ga_ZZLPJBMBEN*czE3NzY4NDIyMTgkbzQkZzAkdDE3NzY4NDIyMTgkajYwJGwwJGgw"
+                target="_blank" rel="noopener noreferrer" title="Sesame">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=app.sesame.com&sz=48" alt="">
+                Sesame
+            </a>
+            <a class="tool-link-btn"
+                href="https://www.heygen.com/att/sem?utm_source=semb&utm_campaign=23595618603&gad_source=1&gad_campaignid=23595618603&gbraid=0AAAAABiJW6ajAGDZ4xeBQvVwZJJM9qExN&gclid=CjwKCAjw46HPBhAMEiwASZpLRDCv_kVqQRg9QSkWH-83slsVnZPFZau0k0VlPoUSBBd1M8YK6XqpXRoChEwQAvD_BwE"
+                target="_blank" rel="noopener noreferrer" title="HeyGen">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=heygen.com&sz=48" alt="">
+                HeyGen
+            </a>
+        </div>
+        <div class="tool-links-row">
+
+
+            <a class="tool-link-btn" href="https://www.perplexity.ai/" target="_blank" rel="noopener noreferrer"
+                title="Perplexity">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=perplexity.ai&sz=48" alt="">
+                Perplexity
+            </a>
+
+            <a class="tool-link-btn"
+                href="https://app.sesame.com/?_gl=1*j3nlkr*_ga*MTM3NDAwNTEwMC4xNzY5NjU5MjMz*_ga_ZZLPJBMBEN*czE3NzY4NDIyMTgkbzQkZzAkdDE3NzY4NDIyMTgkajYwJGwwJGgw"
+                target="_blank" rel="noopener noreferrer" title="Sesame">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=app.sesame.com&sz=48" alt="">
+                Sesame
+            </a>
+            <a class="tool-link-btn"
+                href="https://www.heygen.com/att/sem?utm_source=semb&utm_campaign=23595618603&gad_source=1&gad_campaignid=23595618603&gbraid=0AAAAABiJW6ajAGDZ4xeBQvVwZJJM9qExN&gclid=CjwKCAjw46HPBhAMEiwASZpLRDCv_kVqQRg9QSkWH-83slsVnZPFZau0k0VlPoUSBBd1M8YK6XqpXRoChEwQAvD_BwE"
+                target="_blank" rel="noopener noreferrer" title="HeyGen">
+                <img class="tool-logo" src="https://www.google.com/s2/favicons?domain=heygen.com&sz=48" alt="">
+                HeyGen
+            </a>
+        </div>
+
+        <!-- Copy prompt template buttons (same style as copy prompt) -->
+
+        <!-- Replace # with your Google Form URL when ready -->
+
+
+    </div>
+
+    <div class="container useful-prompts-wrap px-3 mb-5 pb-4" id="usefulPromptsSection">
+        <h4 class="mb-2 fw-semibold pb-2 border-bottom" data-i18n="classppt.promptStatements.title">Useful prompt
+            phrases</h4>
+        <p class="small text-muted mb-4" data-i18n="classppt.promptStatements.lead">Copy a prompt into Gemini,
+            Perplexity,
+            or your favourite AI tool, then replace the placeholders like [topic].</p>
+        <div class="row row-cols-1 row-cols-lg-2 g-3">
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-chart-line text-primary"></i><span
+                                data-i18n="classppt.prompt.pareto.name">Pareto Principle Learning Plan</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.pareto.text">I want to learn [topic]. Can you use the Pareto
+                            Principle, which identifies the 20% of the topic that will yield 80% of the desired results,
+                            to create a focused learning plan for me?</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.pareto.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-book text-success"></i><span
+                                data-i18n="classppt.prompt.resources.name">Learning Resources Suggestion</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.resources.text">Suggest various learning resources (books,
+                            videos, podcasts, interactive exercises) for [topic] that cater to different learning
+                            styles.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.resources.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-lightbulb text-warning"></i><span
+                                data-i18n="classppt.prompt.explainSimple.name">Explain in Simple Terms</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.explainSimple.text">Explain [topic] to me in the simplest terms
+                            possible as if I were a complete beginner.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.explainSimple.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-brain text-info"></i><span
+                                data-i18n="classppt.prompt.mentalModels.name">Mental
+                                Models &amp; Analogies</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.mentalModels.text">Create mental models or analogies to help me
+                            understand and remember [topics].</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.mentalModels.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-eye text-danger"></i><span
+                                data-i18n="classppt.prompt.visualization.name">Visualization Exercise</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.visualization.text">Guide me through a visualization exercise to
+                            help me internalize [topic] and imagine myself successfully applying it to a real-life
+                            situation.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.visualization.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-question-circle text-secondary"></i><span
+                                data-i18n="classppt.prompt.socraticMethod.name">Socratic Method</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.socraticMethod.text">I want you to act as Socrates and use the
+                            Socratic Method to help me improve my critical thinking, logic, and reasoning skills. Ask me
+                            open-ended questions about what I say; after each answer, give constructive feedback before
+                            asking the next question.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.socraticMethod.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-user-graduate text-muted"></i><span
+                                data-i18n="classppt.prompt.socraticTutor.name">Socratic Tutor</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.socraticTutor.text">Act as a Socratic tutor and help me
+                            understand
+                            [topic]. Ask questions to guide my understanding and give feedback after each reply before
+                            moving on.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.socraticTutor.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-table text-muted"></i><span
+                                data-i18n="classppt.prompt.semanticTable.name">Semantic
+                                Propositions Table</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.semanticTable.text">Make a list of propositions for this [vocab
+                            list] in the formats “X is a type of Y”, “W is caused by X”, and “A explains B”. Put them in
+                            a
+                            table with four columns: term, proposition, type (Classification / Cause–Effect /
+                            Explanation), and explanation.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.semanticTable.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-graduation-cap text-dark"></i><span
+                                data-i18n="classppt.prompt.feynman.name">Feynman Technique</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.feynman.text">Break down [topic] into core components using the
+                            Feynman Technique, then quiz me step by step until I can explain it simply in my own words.
+                        </p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.feynman.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-theater-masks text-primary"></i><span
+                                data-i18n="classppt.prompt.rolePlay.name">Role-Playing Scenario</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.rolePlay.text">Teach me [topic] through a role-playing scenario
+                            where
+                            I practise applying ideas in a simulated real-world situation, with feedback after each
+                            step.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.rolePlay.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-balance-scale text-success"></i><span
+                                data-i18n="classppt.prompt.compareContrast.name">Compare &amp; Contrast</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.compareContrast.text">Compare and contrast [topic] with [related
+                            topic] in a table: similarities, differences, and when to use each.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.compareContrast.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-project-diagram text-warning"></i><span
+                                data-i18n="classppt.prompt.mindMap.name">Mind Map Design</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.mindMap.text">Design a text-based mind map for [topic], starting
+                            from the central idea and branching into subtopics, examples, and connections.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.mindMap.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-book-open text-info"></i><span
+                                data-i18n="classppt.prompt.storyLearning.name">Story / Narrative Learning</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.storyLearning.text">Turn [topic] into a memorable story or
+                            narrative. Weave key ideas into the plot so I can remember them through the storyline.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.storyLearning.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-comments text-danger"></i><span
+                                data-i18n="classppt.prompt.debateBothSides.name">Debate Both Sides</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.debateBothSides.text">Debate both sides of a controversial angle
+                            on
+                            [topic] with me: argue for and against, then help me refine my stance with counterpoints.
+                        </p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.debateBothSides.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-chalkboard-teacher text-success"></i><span
+                                data-i18n="classppt.prompt.teachBack.name">Teach-Back Challenge</span></h6>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.teachBack.text">After I have studied [topic], ask me to teach it
+                            back
+                            to you as if you were a beginner. Comment on clarity, accuracy, and depth, then suggest how
+                            I can
+                            explain it better.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.teachBack.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-copy text-secondary"></i><span
+                                data-i18n="classppt.prompt.spellGrammar.name">Prompt copy (1) — Spelling &amp; Grammar
+                                Fix</span>
+                        </h6>
+                        <p class="small text-muted mb-2" data-i18n="classppt.prompt.spellGrammar.desc">Copy this prompt
+                            to correct spelling and grammar with formatting rules.</p>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.spellGrammar.text">Correct all spelling mistakes and make the
+                            corrections italic. Correct all grammar mistakes by making the mistakes strikethrough and
+                            the corrections bold.</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.spellGrammar.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border prompt-copy-card">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title d-flex align-items-center gap-2 mb-2"><i
+                                class="fas fa-copy text-secondary"></i><span
+                                data-i18n="classppt.prompt.argumentEval.name">Prompt copy (2) — Argument Evaluation
+                                &amp; Rewrite</span>
+                        </h6>
+                        <p class="small text-muted mb-2" data-i18n="classppt.prompt.argumentEval.desc">Copy this prompt
+                            to label arguments, rewrite clearly, and explain your evaluation.</p>
+                        <p class="card-text small text-body-secondary mb-3 flex-grow-1"
+                            data-i18n="classppt.prompt.argumentEval.text">Evaluate the above paragraph...</p>
+                        <button type="button"
+                            class="btn btn-sm btn-primary mt-auto align-self-start prompt-statement-copy-btn"
+                            data-copy-key="classppt.prompt.argumentEval.text"><i class="fas fa-copy me-1"></i><span
+                                class="prompt-copy-label" data-i18n="classppt.prompt.copyBtn">Copy
+                                prompt</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/e067495424.js" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, updateDoc, getDoc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDA-xRi4wnkZ-30fnSfZ7ufaIFyTutAbbA",
+            authDomain: "iw10-skm.firebaseapp.com",
+            projectId: "iw10-skm",
+            storageBucket: "iw10-skm.firebasestorage.app",
+            messagingSenderId: "158280477806",
+            appId: "1:158280477806:web:aef32aed0ef203d9b28a7f",
+            measurementId: "G-DNX5CC83Z4"
+        };
+
+        // Initialize Firebase
+        let app, storage;
+        try {
+            app = initializeApp(firebaseConfig);
+            console.log("Firebase initialized successfully");
+
+            // Initialize Analytics
+            try {
+                const analytics = getAnalytics(app);
+                console.log("Firebase Analytics initialized");
+            } catch (analyticsError) {
+                console.warn("Analytics initialization failed:", analyticsError);
+            }
+
+            // Initialize Storage
+            try {
+                storage = getStorage(app);
+                console.log("Firebase Storage initialized successfully");
+
+                // Test storage access
+                const testRef = ref(storage, ".connection_test");
+                console.log("Storage reference created:", testRef);
+            } catch (storageError) {
+                console.error("Storage initialization failed:", storageError);
+                alert("Firebase存儲初始化失敗，上傳功能可能不可用");
+            }
+
+            // Initialize Firestore
+            try {
+                const db = getFirestore(app);
+                console.log("Firestore initialized successfully");
+                window.fbDB = db;
+            } catch (firestoreError) {
+                console.error("Firestore initialization failed:", firestoreError);
+                alert("Firestore初始化失敗，提交功能可能不可用");
+            }
+        } catch (firebaseError) {
+            console.error("Firebase initialization failed:", firebaseError);
+            alert("Firebase初始化失敗，上傳功能不可用");
+        }
+
+        // Make storage available globally
+        window.fbStorage = storage;
+
+        // Generate a random user ID if not already set
+        if (!localStorage.getItem('currentUserId')) {
+            const randomId = 'user_' + Math.random().toString(36).substring(2, 8);
+            localStorage.setItem('currentUserId', randomId);
+            console.log('Generated random user ID:', randomId);
+        }
+
+        // Function to get emoji for user ID
+        function getEmojiForUserId(userId) {
+            const kidFriendlyEmojis = [
+                '🌟', '🌈', '🦄', '🐱', '🐶', '🦁', '🐼', '🐨', '🦊', '🦋',
+                '🌸', '🌺', '🌻', '🌞', '⭐', '🌙', '☀️', '🌤️', '🌺', '🌷',
+                '🍀', '🌱', '🌳', '🌴', '🌵', '🌿', '🍄', '🌼', '🌻', '🌹',
+                '🎨', '🎭', '🎪', '🎯', '🎲'
+            ];
+            // Subtract 1 from userId since we want to start from 0
+            const index = (parseInt(userId) - 1) % kidFriendlyEmojis.length;
+            return kidFriendlyEmojis[index];
+        }
+
+        // Update user ID display in the navbar
+        const userIdDisplay = document.getElementById('userIdDisplay');
+        const currentUserId = localStorage.getItem('currentUserId');
+
+        if (userIdDisplay && currentUserId) {
+            userIdDisplay.textContent = `User ID: ${currentUserId} ${getEmojiForUserId(currentUserId)}`;
+            userIdDisplay.classList.remove('d-none');
+        }
+
+        const nameInput = document.getElementById('name_1');
+        if (nameInput) {
+            nameInput.value = currentUserId;
+        }
+
+        const items = document.querySelectorAll('.text-item');
+        const buttons = document.querySelectorAll('.btn');
+        let currentIndex = 0;
+        let rotationInterval; // Variable to hold the interval
+
+        function rotateText() {
+            items[currentIndex]?.classList.remove('active');
+            currentIndex = (currentIndex + 1) % items.length;
+            items[currentIndex]?.classList.add('active');
+        }
+
+        function showText(index) {
+            const newIndex = parseInt(index);
+            if (isNaN(newIndex) || newIndex < 0 || newIndex >= items.length) {
+                console.warn('Invalid index:', index);
+                return;
+            }
+
+            items[currentIndex]?.classList.remove('active');
+            currentIndex = newIndex;
+            items[currentIndex]?.classList.add('active');
+        }
+
+        function startRotation() {
+            rotationInterval = setInterval(rotateText, 5000); // Change text every 3 seconds
+        }
+
+        function stopRotation() {
+            clearInterval(rotationInterval); // Stop the rotation
+        }
+
+        // Start the rotation on page load
+        startRotation();
+
+        buttons.forEach(button => {
+            button.addEventListener('mouseover', () => {
+                stopRotation(); // Stop rotation on mouse over
+                showText(button.getAttribute('data-index'));
+            });
+            button.addEventListener('mouseleave', () => {
+                startRotation(); // Resume rotation on mouse leave
+            });
+        });
+
+        // Font size variable for the rich text editor
+        window.editorFontSize = 16; // Default font size (moved to global scope to avoid redeclaration)
+
+        // Form handling for Prompt submissions
+        const form1 = document.getElementById('dataForm_ws1');
+
+        form1.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const textarea = form1.querySelector('textarea');
+            const label = form1.querySelector('label');
+            const promptText = textarea.value.trim();
+
+            if (!promptText) {
+                alert('請輸入Prompt內容再提交');
+                return;
+            }
+
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (!currentUserId) {
+                alert('請先登入或設置用戶ID');
+                return;
+            }
+
+            try {
+                // Show loading state
+                const submitBtn = form1.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = '提交中...';
+
+                // Add document to Firestore
+                const promptsCollection = collection(window.fbDB, 'prompts');
+                const newPrompt = {
+                    text: promptText,
+                    userId: currentUserId,
+                    timestamp: serverTimestamp(),
+                    createdAt: new Date().toISOString() // Backup for sorting if serverTimestamp fails
+                };
+
+                await addDoc(promptsCollection, newPrompt);
+
+                // Clear the form and show success message
+                textarea.value = '';
+                label.textContent = '成功提交! 多謝您的提示。';
+
+                // Show alert to confirm submission
+                alert('提交成功！');
+
+                // Refresh the prompts display
+                loadPrompts();
+            } catch (error) {
+                console.error('Error submitting prompt:', error);
+                alert(`提交失敗: ${error.message}`);
+            } finally {
+                // Restore button state
+                const submitBtn = form1.querySelector('button[type="submit"]');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '提交指示';
+            }
+        });
+
+        // In case dataForm_ws4 exists elsewhere in the document, keep a simplified version
+        const form2 = document.getElementById('dataForm_ws4');
+        if (form2) {
+            form2.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const input = form2.querySelector('input[type="url"]');
+                const label = form2.querySelector('label');
+
+                if (input) {
+                    input.value = '';
+                    if (label) label.textContent = '成功提交!';
+                    alert('提交成功！');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameInput = document.getElementById('name');
+            const currentUserId = localStorage.getItem('currentUserId');
+            nameInput.value = currentUserId;
+
+            // Add keyboard event listeners
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'ArrowRight' && e.shiftKey) {
+                    nameInput.classList.remove('d-none');
+                }
+            });
+
+            document.addEventListener('keyup', function (e) {
+                if (e.key === 'ArrowRight' && e.shiftKey) {
+                    nameInput.classList.add('d-none');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageUpload = document.getElementById('imageUpload');
+            const imagePreview = document.getElementById('imagePreview');
+            const uploadButton = document.getElementById('uploadButton');
+            const imageName = document.getElementById('imageName');
+            const uploadStatus = document.getElementById('uploadStatus');
+            const uploadStatusMessage = document.getElementById('uploadStatusMessage');
+            const uploadProgress = document.getElementById('uploadProgress');
+            const displayUserId = document.getElementById('displayUserId');
+            const changeUserIdBtn = document.getElementById('changeUserIdBtn');
+            const testConnectionBtn = document.getElementById('testConnectionBtn');
+
+            // Initialize prompts display
+            loadPrompts();
+
+            // Handle prompt edit modal
+            const savePromptEditBtn = document.getElementById('savePromptEdit');
+            if (savePromptEditBtn) {
+                savePromptEditBtn.addEventListener('click', updatePrompt);
+            }
+
+            // Set up refresh button
+            const refreshBtn = document.getElementById('refreshPrompts');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    refreshBtn.disabled = true;
+                    const icon = refreshBtn.querySelector('i');
+                    icon.classList.add('fa-spin');
+                    loadPrompts().finally(() => {
+                        setTimeout(() => {
+                            refreshBtn.disabled = false;
+                            icon.classList.remove('fa-spin');
+                        }, 500);
+                    });
+                });
+            }
+
+            // Set up sort buttons
+            const sortNewestBtn = document.getElementById('sortNewest');
+            const sortOldestBtn = document.getElementById('sortOldest');
+
+            if (sortNewestBtn) {
+                sortNewestBtn.addEventListener('click', () => {
+                    loadPrompts('desc');
+                });
+            }
+
+            if (sortOldestBtn) {
+                sortOldestBtn.addEventListener('click', () => {
+                    loadPrompts('asc');
+                });
+            }
+
+            // Function to test Firebase connectivity
+            async function testFirebaseConnection() {
+                if (!window.fbStorage) {
+                    alert('Firebase 儲存還未初始化');
+                    return false;
+                }
+
+                try {
+                    const testRef = ref(window.fbStorage, `.connection_test_${Date.now()}`);
+                    const testBlob = new Blob(['connection_test'], { type: 'text/plain' });
+
+                    // Try to upload a small test file
+                    await uploadBytes(testRef, testBlob);
+
+                    // Try to get the download URL
+                    const downloadURL = await getDownloadURL(testRef);
+
+                    console.log('Firebase connection test successful:', downloadURL);
+                    alert('Firebase 連接測試成功！上傳功能已正常運作。');
+                    return true;
+                } catch (error) {
+                    console.error('Firebase connection test failed:', error);
+
+                    // Check if it's a permission error
+                    if (error.code === 'storage/unauthorized') {
+                        alert('Firebase 連接正常，但權限受限。請聯絡管理員獲取上傳權限。');
+                        return true; // Connection works, just permissions issue
+                    } else {
+                        alert(`Firebase 連接測試失敗: ${error.message}`);
+                        return false;
+                    }
+                }
+            }
+
+            // Add event listener for test connection button
+            testConnectionBtn.addEventListener('click', function () {
+                testFirebaseConnection();
+            });
+
+            // Update user ID display
+            function updateUserIdDisplay() {
+                const currentUserId = localStorage.getItem('currentUserId') || '未設置';
+                displayUserId.textContent = currentUserId;
+            }
+
+            // Initialize user ID display
+            updateUserIdDisplay();
+
+            // Handle user ID change button
+            changeUserIdBtn.addEventListener('click', function () {
+                const currentUserId = localStorage.getItem('currentUserId') || '';
+                const newUserId = prompt('請輸入新的用戶ID:', currentUserId);
+                if (newUserId && newUserId.trim() !== '') {
+                    localStorage.setItem('currentUserId', newUserId.trim());
+                    updateUserIdDisplay();
+                    alert('用戶ID已更新!');
+                }
+            });
+
+            // Preview images
+            imageUpload.addEventListener('change', function (e) {
+                imagePreview.innerHTML = ''; // Clear existing previews
+
+                [...e.target.files].forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const preview = document.createElement('div');
+                        preview.className = 'position-relative';
+                        preview.innerHTML = `
+                                                        <img src="${e.target.result}" style="max-width: 200px; max-height: 200px; object-fit: contain;">
+                                                `;
+                        imagePreview.appendChild(preview);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            // Handle upload
+            uploadButton.addEventListener('click', async function () {
+                const files = imageUpload.files;
+                const currentUserId = localStorage.getItem('currentUserId');
+
+                // Check for user ID
+                if (!currentUserId) {
+                    // Prompt the user to enter a user ID if not already set
+                    const userId = prompt('請輸入您的用戶ID:');
+                    if (!userId) {
+                        alert('需要用戶ID才能上傳圖片');
+                        return;
+                    }
+                    localStorage.setItem('currentUserId', userId);
+                }
+
+                if (!files.length || !imageName.value) {
+                    alert('請選擇圖片並入名稱');
+                    return;
+                }
+
+                try {
+                    uploadButton.disabled = true;
+                    uploadButton.textContent = '上傳中...';
+                    uploadStatus.classList.remove('d-none');
+                    uploadStatusMessage.textContent = '準備上傳...';
+
+                    // Reset progress bar
+                    uploadProgress.style.width = '0%';
+                    uploadProgress.textContent = '0%';
+
+                    // Test Firebase connection first
+                    uploadStatusMessage.textContent = '檢查 Firebase 連接...';
+                    try {
+                        const testRef = ref(window.fbStorage, `.connection_test_${Date.now()}`);
+                        const testBlob = new Blob(['connection_test'], { type: 'text/plain' });
+                        await uploadBytes(testRef, testBlob);
+                        uploadStatusMessage.textContent = 'Firebase 連接成功，開始上傳...';
+                    } catch (connectionError) {
+                        // Check if it's a permission error
+                        if (connectionError.code === 'storage/unauthorized') {
+                            console.log('Firebase connection works but lacks permissions');
+                            uploadStatusMessage.textContent = 'Firebase 連接正常，但權限受限。繼續嘗試上傳...';
+                            // Continue with upload attempt anyway
+                        } else {
+                            throw new Error(`Firebase 連接失敗: ${connectionError.message}`);
+                        }
+                    }
+
+                    let successCount = 0;
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const timestamp = Date.now();
+                        const fileName = `${currentUserId}_${imageName.value}_${timestamp}_${i}`;
+                        const storageRef = ref(window.fbStorage, `stories/${fileName}`);
+
+                        // Update progress status
+                        const progressPercent = Math.round((i / files.length) * 100);
+                        uploadProgress.style.width = `${progressPercent}%`;
+                        uploadProgress.textContent = `${progressPercent}%`;
+                        uploadStatusMessage.textContent = `正在上傳文件 ${i + 1}/${files.length}: ${file.name}`;
+
+                        try {
+                            await uploadBytes(storageRef, file);
+                            const downloadURL = await getDownloadURL(storageRef);
+                            console.log('File uploaded:', downloadURL);
+                            successCount++;
+                        } catch (fileError) {
+                            console.error(`Error uploading ${file.name}:`, fileError);
+
+                            // Check if it's a permission error
+                            if (fileError.code === 'storage/unauthorized') {
+                                uploadStatusMessage.textContent = `上傳 ${file.name} 失敗: 權限不足，請聯絡管理員`;
+                            } else {
+                                uploadStatusMessage.textContent = `上傳 ${file.name} 失敗: ${fileError.message}`;
+                            }
+                        }
+                    }
+
+                    // Set progress to 100%
+                    uploadProgress.style.width = '100%';
+                    uploadProgress.textContent = '100%';
+
+                    if (successCount === files.length) {
+                        uploadStatusMessage.textContent = `全部 ${files.length} 個文件上傳成功！`;
+                        alert('圖片上傳成功！');
+                    } else {
+                        uploadStatusMessage.textContent = `成功上傳 ${successCount}/${files.length} 個文件。`;
+                        alert(`部分上傳成功：${successCount}/${files.length} 個文件`);
+                    }
+
+                    imageUpload.value = '';
+                    imageName.value = '';
+                    imagePreview.innerHTML = '';
+
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    uploadStatusMessage.textContent = `上傳錯誤: ${error.message}`;
+                    alert(`上傳失敗，請重試: ${error.message}`);
+                } finally {
+                    uploadButton.disabled = false;
+                    uploadButton.textContent = '上傳圖片';
+                    setTimeout(() => {
+                        uploadStatus.classList.add('d-none'); // Hide status after a delay
+                    }, 5000);
+                }
+            });
+        });
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const sectionTitle = document.getElementById('sectionTitle');
+            const sections = document.querySelectorAll('.row.flex-grow-2.mt-5.fade-in');
+
+            window.addEventListener('scroll', function () {
+                // Find which section is currently in view
+                let currentSection = null;
+                let smallestDistance = Infinity;
+
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    // Calculate distance from top of viewport
+                    const distance = Math.abs(rect.top);
+
+                    // Find the section closest to the top of the viewport
+                    if (distance < smallestDistance) {
+                        smallestDistance = distance;
+                        currentSection = section;
+                    }
+                });
+
+                // Update section title if we found a section
+                if (currentSection) {
+                    const sectionHeader = currentSection.querySelector('h4.mb-3');
+                    // Show section title when any section is above the viewport
+                    if (currentSection.getBoundingClientRect().top < 0) {
+                        sectionTitle.textContent = sectionHeader.textContent;
+                        sectionTitle.classList.remove('d-none');
+                    } else {
+                        sectionTitle.classList.add('d-none');
+                    }
+                }
+            });
+        });
+
+        // Make openModal available globally
+        window.openModal = function (presentationId) {
+            const modal = new bootstrap.Modal(document.getElementById('presentationModal'));
+            const container = document.getElementById('modalIframeContainer');
+
+            // Define the iframe sources
+            const presentations = {
+                'presentation2': "https://docs.google.com/presentation/d/e/2PACX-1vR0N5eLd3d65nUFnFNtZp2HMlcOj0VPHmjnM4Jjq7u7SpTj1I-F0nrx1Np2Kiw1nQIu1-q6sJRv5R-S/pubembed?start=false&loop=false&delayms=3000"
+            };
+
+            // Create and insert the iframe
+            container.innerHTML = `<iframe src="${presentations[presentationId]}" 
+                                frameborder="0" 
+                                width="100%" 
+                                height="100%" 
+                                allowfullscreen="true" 
+                                mozallowfullscreen="true" 
+                                webkitallowfullscreen="true">
+                        </iframe>`;
+
+            modal.show();
+        };
+
+        // Testing code for debugging purposes
+        console.log("Script initialized");
+
+    </script>
+    <script>
+        // Use the global font size variable declared above
+        function changeFontSize(change) {
+            window.editorFontSize += change; // Adjust the font size using the global variable
+            document.getElementById('richTextInput').style.fontSize = window.editorFontSize + 'px';
+        }
+    </script>
+    <script>
+        // Add all the prompt handling functions to the global window object
+
+        function copyToClipboard(text) {
+            if (!text) return;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () {
+                    if (typeof alert === 'function') alert('已複製到剪貼簿 / Copied to clipboard');
+                }).catch(function () { fallbackCopy(text); });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+        function fallbackCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                if (typeof alert === 'function') alert('已複製到剪貼簿 / Copied to clipboard');
+            } catch (e) { }
+            document.body.removeChild(ta);
+        }
+
+        // Copy prompt template buttons
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.copy-prompt-template-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const prompt = this.getAttribute('data-prompt');
+                    if (prompt) copyToClipboard(prompt);
+                });
+                // Show full prompt on hover via Bootstrap tooltip
+                new bootstrap.Tooltip(btn, {
+                    trigger: 'hover',
+                    delay: { show: 200, hide: 0 }
+                });
+            });
+        });
+
+        // Load prompts from Firestore and display them
+        async function loadPrompts(sortDirection = 'desc') {
+            const promptLogbook = document.getElementById('promptLogbook');
+            const loadingPrompts = document.getElementById('loadingPrompts');
+
+            if (!promptLogbook || !window.fbDB) return;
+
+            try {
+                // Show loading indicator
+                if (loadingPrompts) {
+                    loadingPrompts.style.display = 'block';
+                }
+
+                // Clear existing content except loading indicator
+                Array.from(promptLogbook.children).forEach(child => {
+                    if (child.id !== 'loadingPrompts') {
+                        promptLogbook.removeChild(child);
+                    }
+                });
+
+                // Get current user ID for permission checks
+                const currentUserId = localStorage.getItem('currentUserId') || '';
+                const isAdmin = currentUserId === 'M514';
+
+                // Import required functions from Firebase
+                const { collection, query, orderBy, getDocs, doc, deleteDoc, updateDoc, serverTimestamp } = await import("https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js");
+
+                // Query prompts, ordered by timestamp
+                const promptsCollection = collection(window.fbDB, 'prompts');
+                const q = query(promptsCollection, orderBy('createdAt', sortDirection));
+                const querySnapshot = await getDocs(q);
+
+                // Hide loading indicator if no prompts found
+                if (querySnapshot.empty && loadingPrompts) {
+                    loadingPrompts.style.display = 'none';
+
+                    // Show "no prompts" message
+                    const noPromptsMsg = document.createElement('div');
+                    noPromptsMsg.className = 'alert alert-secondary text-center';
+                    noPromptsMsg.textContent = '尚未有人提交Prompt';
+                    promptLogbook.appendChild(noPromptsMsg);
+                    return;
+                }
+
+                // Process each prompt document
+                querySnapshot.forEach(doc => {
+                    const promptData = doc.data();
+                    const promptId = doc.id;
+                    const canEdit = isAdmin || promptData.userId === currentUserId;
+
+                    // Format timestamp
+                    let timestampStr = '剛剛';
+                    if (promptData.timestamp) {
+                        const timestamp = promptData.timestamp.toDate();
+                        timestampStr = new Intl.DateTimeFormat('zh-HK', {
+                            year: 'numeric',
+                            month: 'numeric',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        }).format(timestamp);
+                    }
+
+                    // Create prompt card
+                    const promptCard = document.createElement('div');
+                    promptCard.className = 'card mb-3 prompt-card';
+                    promptCard.innerHTML = `
+                                <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                                    <span class="fw-semibold"><i class="fas fa-user-circle me-2"></i>${promptData.userId || '匿名'}</span>
+                                    <small class="text-muted"><i class="far fa-clock me-1"></i>${timestampStr}</small>
+                                </div>
+                                <div class="card-body position-relative">
+                                    <div class="action-buttons position-absolute top-0 end-0 mt-2 me-2 d-flex gap-1">
+                                        <button class="btn btn-sm btn-light rounded-circle copy-btn" 
+                                                data-prompt="${escape(promptData.text)}" 
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="複製">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                        ${canEdit ? `
+                                        <button class="btn btn-sm btn-light rounded-circle edit-btn" 
+                                                data-id="${promptId}" 
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="編輯">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-light rounded-circle delete-btn" 
+                                                data-id="${promptId}"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="刪除">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        ` : ''}
+                                    </div>
+                                    <p class="card-text pe-5">${promptData.text.replace(/\n/g, '<br>')}</p>
+                                </div>
+                            `;
+
+                    // Add event listeners
+                    promptLogbook.appendChild(promptCard);
+
+                    // Initialize tooltips
+                    const tooltipTriggerList = promptCard.querySelectorAll('[data-bs-toggle="tooltip"]');
+                    tooltipTriggerList.forEach(tooltipTriggerEl => {
+                        new bootstrap.Tooltip(tooltipTriggerEl, {
+                            trigger: 'hover'
+                        });
+                    });
+
+                    // Copy button
+                    const copyBtn = promptCard.querySelector('.copy-btn');
+                    if (copyBtn) {
+                        copyBtn.addEventListener('click', function () {
+                            const promptText = unescape(this.getAttribute('data-prompt'));
+                            copyToClipboard(promptText);
+                        });
+                    }
+
+                    // Edit button
+                    const editBtn = promptCard.querySelector('.edit-btn');
+                    if (editBtn) {
+                        editBtn.addEventListener('click', function () {
+                            const promptId = this.getAttribute('data-id');
+                            openEditModal(promptId, promptData.text);
+                        });
+                    }
+
+                    // Delete button
+                    const deleteBtn = promptCard.querySelector('.delete-btn');
+                    if (deleteBtn) {
+                        deleteBtn.addEventListener('click', function () {
+                            const promptId = this.getAttribute('data-id');
+                            deletePrompt(promptId);
+                        });
+                    }
+                });
+
+                // Hide loading indicator
+                if (loadingPrompts) {
+                    loadingPrompts.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading prompts:', error);
+                if (loadingPrompts) {
+                    loadingPrompts.style.display = 'none';
+                }
+
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'alert alert-danger';
+                errorMsg.textContent = `載入Prompt失敗: ${error.message}`;
+                promptLogbook.appendChild(errorMsg);
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
