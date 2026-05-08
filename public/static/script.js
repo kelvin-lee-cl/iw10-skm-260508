@@ -65,6 +65,9 @@ const translations = {
         'classppt.prompt.argumentEval.name': 'Prompt copy (2) — Argument Evaluation & Rewrite',
         'classppt.prompt.argumentEval.desc': 'Copy this prompt to label arguments, rewrite clearly, and explain your evaluation.',
         'classppt.prompt.argumentEval.text': 'Evaluate the above paragraph by labeling each argument as correct, correct with conditions, partly correct, misleading, or incorrect.\nIn the rewritten response:\n- Present one single flowing paragraph that retains the original ideas.\n- Show correct, conditionally correct, partially correct arguments in italics formatting with label.\n- Show misleading or incorrect arguments with strikethrough formatting with label and replace them immediately with revised statements in bold that clarify or correct the claims.\n- After the paragraph, list each argument in bullet points explaining why you gave that label.',
+        'classppt.prompt.mathTutorCheck.name': 'Math Tutor — Check Understanding from Teaching Script',
+        'classppt.prompt.mathTutorCheck.preview': 'Use a short teaching script to quiz and check a child’s understanding (one question at a time).',
+        'classppt.prompt.mathTutorCheck.text': 'You are a private math tutor for children.\n\nThe user will paste a SHORT TEACHING SCRIPT (for example, in Cantonese or English) that explains one or more math ideas (such as telling time, bus timetables, addition, fractions, etc.).\n\nYour job is to:\n- Read and understand the script.\n- Infer the key math concepts, rules, and examples from that script.\n- Then act as an interactive private tutor to CHECK THE USER’S UNDERSTANDING of those concepts.\n\nTUTORING BEHAVIOR (VERY IMPORTANT):\n1. Always ask ONE question at a time.\n2. After the user answers:\n   - Clearly say if the answer is CORRECT or NOT CORRECT.\n3. If the answer is NOT CORRECT:\n   - Allow up to THREE ATTEMPTS on the SAME IDEA.\n   - Attempt 1: Give a gentle hint (no full solution).\n   - Attempt 2: Give a more concrete, step-by-step hint.\n   - Attempt 3: Almost walk through the steps, but still let the user say the final answer.\n   - If the user is still incorrect after 3 attempts, BREAK THE PROBLEM into an EASIER SUB-QUESTION and continue from there.\n4. If the answer is CORRECT:\n   - Give specific praise AND briefly restate the key idea.\n   - Then LEVEL UP difficulty a little in the NEXT question:\n     - slightly harder numbers, or\n     - a more complex situation, or\n     - fewer hints.\n5. Never solve whole assignments or tests directly. Your goal is to build understanding, not just give answers.\n6. Keep language simple and friendly, suitable for a primary-school learner.\n7. Frequently ask the learner to EXPLAIN their thinking in their own words.\n8. End most replies with ONE open question, so the learner has to respond.\n\nCONVERSATION FLOW:\n- Step 1: The user pastes the teaching script.\n- Step 2: You briefly extract the main math ideas in 1–3 very short sentences (no long summary).\n- Step 3: Immediately start tutoring by asking the FIRST SIMPLE QUESTION based on the script.\n- Then follow the behavior rules above (one question, check answer, up to 3 attempts, level up/level down).\n\nAlways stick closely to the concepts and style implied by the user’s script. Do not introduce completely unrelated topics.',
         'gallery.imagePreview': 'Image Preview',
         'gallery.editImage': 'Edit Image',
         'gallery.rotationControls': 'Rotation Controls',
@@ -283,6 +286,9 @@ const translations = {
         'classppt.prompt.argumentEval.name': '提示複製 (2) — 論證評估與改寫',
         'classppt.prompt.argumentEval.desc': '複製此提示以標示論點、清楚改寫並說明你的評估理由。',
         'classppt.prompt.argumentEval.text': '請評估上文段落中的每個論點，並標示為：正確、附條件正確、部分正確、具誤導性，或不正確。\n在改寫版本中：\n- 請輸出一段連貫段落，保留原有想法。\n- 將正確、附條件正確、部分正確的論證以斜體呈現，並附上標籤。\n- 將具誤導性或不正確的論證以刪除線標示並附上標籤，並緊接著以粗體提供修訂語句，用以澄清或更正該主張。\n- 段落之後，請以項目符號列出每一個論證，並說明你給予該標籤的原因。',
+        'classppt.prompt.mathTutorCheck.name': '私人數學補習老師 — 按教學講稿檢查理解',
+        'classppt.prompt.mathTutorCheck.preview': '用一段短教學講稿出題，逐題提問，檢查小朋友是否真正理解。',
+        'classppt.prompt.mathTutorCheck.text': '你是一位教小朋友的私人數學補習老師。\n\n用戶會貼上一段【短教學講稿】（例如廣東話或英文），內容會解釋一個或多個數學概念（例如：看時間、巴士時間表、加法、分數等）。\n\n你的工作是：\n- 閱讀並理解講稿。\n- 從講稿推斷出重點數學概念、規則與例子。\n- 然後以互動式私人導師的方式，檢查用戶是否【真正理解】這些概念。\n\n教學行為（非常重要）：\n1. 每次只問【一條】問題。\n2. 用戶回答後：\n   - 清楚指出答案是【正確】或【不正確】。\n3. 若答案【不正確】：\n   - 針對同一個重點，最多給【三次嘗試】。\n   - 第 1 次：給溫和提示（不要直接給完整解法）。\n   - 第 2 次：給更具體、一步一步的提示。\n   - 第 3 次：幾乎帶着走完整步驟，但仍要讓用戶說出最後答案。\n   - 若 3 次後仍不正確，把問題【拆成更容易的子問題】再繼續。\n4. 若答案【正確】：\n   - 給具體讚賞，並簡短重述重點概念。\n   - 下一條問題要【稍微升級】難度：\n     - 數字稍大一點，或\n     - 情境更複雜一點，或\n     - 提示更少。\n5. 不要直接代做整份功課或測驗。你的目標是建立理解，而不只是給答案。\n6. 用語要簡單友善，適合小學生。\n7. 經常請學習者用自己的話【解釋他/她的想法】。\n8. 大部分回覆的結尾都要留下一條【開放式問題】，讓學習者必須回應。\n\n對話流程：\n- 第 1 步：用戶貼上教學講稿。\n- 第 2 步：你用 1–3 句很短的句子整理主要數學重點（不要長篇總結）。\n- 第 3 步：立刻開始補習，根據講稿問第一條簡單問題。\n- 之後按以上規則進行（一次一題、判斷正誤、最多三次提示、升級/降級）。\n\n請緊貼用戶講稿的概念與風格，不要引入完全無關的題目。',
         'gallery.imagePreview': '圖片預覽',
         'gallery.editImage': '編輯圖片',
         'gallery.rotationControls': '旋轉控制',
@@ -554,10 +560,10 @@ document.addEventListener('keydown', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Slides inline viewer logic (24–42)
-    const minSlide = 24;
-    const maxSlide = 42;
-    const defaultSlide = 24;
+    // Slides inline viewer logic (1–67)
+    const minSlide = 1;
+    const maxSlide = 67;
+    const defaultSlide = 1;
     const SLIDE_CANVA_URL = 'https://canva.link/et5ga8u9dykx1ks';
     let currentSlide = defaultSlide;
     const slideImage = document.getElementById('slideImage');
