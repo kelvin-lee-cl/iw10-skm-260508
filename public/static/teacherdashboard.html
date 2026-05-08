@@ -882,6 +882,7 @@
                     const title = escapeHtml(writtenCardTitle('avatarWorkshop'));
                     const scriptLbl = L('gallery.avatarScriptLabel', 'Script');
                     const audioLbl = L('gallery.avatarTrainingAudio', 'Training audio');
+                    const dlLbl = L('gallery.downloadMp3', 'Download MP3');
                     const hgLbl = L('gallery.avatarHeygenLink', 'HeyGen link');
                     const ppLbl = L('gallery.avatarPerplexityLink', 'Perplexity tutor link');
                     const openLbl = L('gallery.openLink', 'Open');
@@ -889,12 +890,26 @@
                     const hg = safeHttpHref(item.heygenLink);
                     const pp = safeHttpHref(item.perplexityLink);
                     const au = safeHttpHref(item.audioUrl);
+                    const mp3FileName = (() => {
+                        const raw = String(item.audioUrl || '').trim();
+                        const last = raw.split(/[?#]/)[0].split('/').pop() || '';
+                        const baseFromUrl = last.replace(/\.[a-z0-9]+$/i, '') || 'training-audio';
+                        const ownerPart = String(item.userId || item.id || 'user').trim()
+                            .replace(/[^a-z0-9._-]+/gi, '_');
+                        return `${baseFromUrl}-${ownerPart}.mp3`;
+                    })();
                     const actBadge = escapeHtml(activityLabelById(item.activityId));
                     const canDelete =
                         (isOwnText || isAdmin) && item.source === 'firestore' && !!item.id;
                     const audioBlock =
                         au !== '#'
-                            ? `<div class="mt-2"><span class="small fw-semibold">${audioLbl}</span><audio controls preload="metadata" src="${escapeHtml(au)}" class="w-100 mt-1"></audio></div>`
+                            ? `<div class="mt-2">
+                                  <span class="small fw-semibold">${audioLbl}</span>
+                                  <audio controls preload="metadata" src="${escapeHtml(au)}" class="w-100 mt-1"></audio>
+                                  <div class="mt-2">
+                                      <a class="btn btn-outline-secondary btn-sm" href="${escapeHtml(au)}" download="${escapeHtml(mp3FileName)}">${dlLbl}</a>
+                                  </div>
+                              </div>`
                             : `<div class="small text-muted mt-2">${audioLbl}: —</div>`;
                     col.innerHTML = `
                     <div class="card h-100 shadow-sm border-0 submission-image-card">
